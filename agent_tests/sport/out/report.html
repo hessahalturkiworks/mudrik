@@ -1,0 +1,228 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مدرك — تقرير فجوات الخدمات</title><style>
+:root{--bg:#fff;--fg:#1d2b33;--mut:#55656d;--line:#dfe6e9;--teal:#1F4E5F;--or:#D95F02;--bl:#2166AC;--gr:#ECEFF1;--card:#f6f9fa}
+@media (prefers-color-scheme:dark){:root:not([data-print]){--bg:#14191c;--fg:#e6ecef;--mut:#9fb0b8;--line:#2b363b;--gr:#2a3338;--card:#1b2226}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:"Segoe UI",Tahoma,Arial,"DejaVu Sans",sans-serif;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding:20px 16px 60px}
+header{border-bottom:3px solid var(--teal);padding-bottom:10px;margin-bottom:18px}
+h1{font-size:26px;margin:0}h2{font-size:19px;margin:34px 0 4px;color:var(--teal)}h3{font-size:15px;margin:18px 0 4px}
+.sub{color:var(--mut);font-size:13px}.note{color:var(--mut);font-size:12.5px;margin:4px 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}
+.sum li{margin:6px 0}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}.kpi b{display:block;font-size:24px;color:var(--teal)}.kpi span{font-size:12.5px;color:var(--mut)}
+.row{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}.row .l{width:150px;flex:none;font-weight:600}
+.track{position:relative;flex:1;height:18px;background:var(--gr);border-radius:4px}.fill{height:100%;border-radius:4px}.mark{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg)}
+.row .v{width:70px;flex:none;text-align:left;direction:ltr;font-variant-numeric:tabular-nums}
+.cols{display:flex;align-items:flex-end;gap:6px;height:230px;margin:14px 0 0;padding-bottom:0;border-bottom:1px solid var(--line)}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}.col .b{width:100%;background:var(--teal);border-radius:4px 4px 0 0;min-height:2px}.col small{font-size:10px;color:var(--mut);margin-bottom:2px}
+.xl{display:flex;gap:6px}.xl div{flex:1;font-size:11px;text-align:center;color:var(--mut);padding-top:4px}
+table.m{border-collapse:separate;border-spacing:2px;font-size:11.5px;width:100%}table.m th{background:var(--teal);color:#fff;padding:6px 4px;font-weight:600;font-size:11px}
+table.m td{text-align:center;padding:9px 3px;border:2px solid transparent;border-radius:3px;cursor:default}table.m td.r{background:var(--card);font-weight:600;text-align:right;padding-right:8px;white-space:nowrap}
+td.few{border:2px dashed var(--fg)!important}td.p{background:var(--or);color:#fff}td.o{background:var(--gr);color:var(--fg)}td.h{background:var(--bl);color:#fff}
+.dim td.p,.dim td.o,.dim td.h{opacity:.15}.dim.fp td.p,.dim.fo td.o,.dim.fh td.h{opacity:1}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.chip{border:1px solid var(--line);background:var(--card);color:var(--fg);padding:4px 12px;border-radius:999px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}.sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-left:5px;vertical-align:-1px}
+table.t{border-collapse:collapse;width:100%;font-size:13px}table.t th{background:var(--teal);color:#fff;text-align:right;padding:6px 8px}table.t td{padding:6px 8px;border-bottom:1px solid var(--line)}
+select,button.dl{font-family:inherit;font-size:13px;padding:4px 10px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg)}button.dl{cursor:pointer}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:760px){.grid2{grid-template-columns:1fr}.row .l{width:110px}}
+#tip{position:fixed;pointer-events:none;background:#12212a;color:#fff;padding:8px 10px;border-radius:6px;font-size:12px;line-height:1.6;max-width:280px;z-index:9;display:none;box-shadow:0 4px 14px #0004}
+svg text{font-family:inherit}.lim li{margin:5px 0}footer{margin-top:40px;color:var(--mut);font-size:12px;border-top:1px solid var(--line);padding-top:10px}
+#sim .ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}#sim input[type=number]{width:80px;font-family:inherit;font-size:13px;padding:4px 6px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.btn{font-family:inherit;font-size:13px;padding:5px 12px;border-radius:6px;border:1px solid var(--teal);background:var(--teal);color:#fff;cursor:pointer}.btn.g{background:var(--card);color:var(--fg);border-color:var(--line)}
+td.add{outline:3px solid #0b7a5a;outline-offset:-3px}td .chg{font-size:10px;display:block;opacity:.9}.alloc span{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 10px;margin:3px;font-size:12.5px}.alloc b{cursor:pointer;color:var(--or);margin-right:6px}
+.delta{font-size:12px;color:var(--mut)}
+@media print{#s-sim{display:none!important}.wrap{max-width:none;padding:0}.chips,select,button.dl,.noprint{display:none!important}.card,.kpi,tr,.row{break-inside:avoid}h2{break-after:avoid}body{font-size:12.5px}.cols{height:170px}}
+</style></head><body><div class="wrap">
+<header><h1>مدرك: أين تحتاج الخدمات غير الربحية دعماً أكثر؟</h1>
+<div class="sub">تقرير آلي من بيانات مفتوحة (سجل الكيانات غير الربحية، تعداد السكان) · أُنشئ في 2026-10-23</div></header>
+
+<section><h2>الملخص التنفيذي</h2><div class="card"><ul class="sum" style="margin:0;padding-right:20px"><li><b>الصورة العامة:</b> 111 جمعية أهلية مصنفة موزعة على 13 منطقة، بمتوسط وطني 0.34 جمعية لكل 100 ألف نسمة.</li>
+<li><b>أقل المناطق تغطية:</b> الشرقية (0.12 لكل 100 ألف)، ثم تبوك (0.23) ومكة المكرمة (0.25).</li>
+<li><b>مصفوفة القرار:</b> 1 خانة (منطقة × تخصص) بتوصية «أولوية دعم»، وهي بأرقام كافية. و6 «تغطية مناسبة» و6 «تغطية عالية».</li>
+<li><b>أكبر فجوة بأرقام كافية:</b> الجمعيات الرياضية في الشرقية: 6 جمعية مقابل ≈18 لو بلغت المتوسط الوطني (الناقص ≈12).</li></ul></div><div class="kpis" id="kpis"></div></section>
+
+<section><h2>١. أين التغطية أقل؟</h2><div class="note">عدد الجمعيات المصنفة لكل 100 ألف نسمة حسب المنطقة. <span class="sw" style="background:var(--or)"></span>أقل من المتوسط الوطني <span class="sw" style="background:var(--bl)"></span>أعلى منه. الخط الأسود = المتوسط الوطني (0.34). مرّر الماوس على أي صف.</div><div class="card" id="c-regions"></div></section>
+
+<section><h2>٢. مصفوفة القرار: منطقة × تخصص</h2>
+<div class="note">كل خانة توصية مبنية على نسبة المعدل المحلي إلى المتوسط الوطني للتخصص. <b>أولوية دعم</b>: أقل من نصف المتوسط. <b>تغطية عالية</b>: أكثر من مرة ونصف، أي أن الدعم الجديد الأفضل في مكان آخر وليس أن المنطقة لا تحتاج. الإطار المنقط = <b>أرقام قليلة</b> (مؤشر أولي).</div>
+<div class="chips"><button class="chip on" data-f="all">الكل</button><button class="chip" data-f="p"><span class="sw" style="background:var(--or)"></span>أولوية دعم</button><button class="chip" data-f="o"><span class="sw" style="background:var(--gr);border:1px solid var(--line)"></span>تغطية مناسبة</button><button class="chip" data-f="h"><span class="sw" style="background:var(--bl)"></span>تغطية عالية</button></div>
+<div class="card" style="overflow-x:auto"><table class="m" id="matrix"></table></div></section>
+
+<section><h2>٣. كم جمعية ناقصة؟</h2><div class="note">مجموع الجمعيات التي تنقص كل منطقة لتبلغ المتوسط الوطني في التخصصات التي تقل عنه. مؤشر تقريبي لحجم الفجوة، وليس هدفاً ملزماً.</div><div class="card" id="c-short"></div>
+<h3>خانات «أولوية دعم» بالتفصيل</h3><div class="card" style="overflow-x:auto"><table class="t" id="t-prio"></table></div>
+<p class="noprint"><button class="dl" data-k="cells" data-n="decision_matrix">تحميل مصفوفة القرار CSV</button> <button class="dl" data-k="gaps" data-n="gaps_ranked">تحميل الفجوات CSV</button></p></section>
+
+<section id="s-demand"><h2>٤. عدسة الطلب: هل حجم التخصص يناسب طلبه؟</h2>
+<div class="note"><b>ضغط الطلب</b> = حصة التخصص من المستفيدين ÷ حصته من المنشآت (مسح منشآت القطاع غير الربحي 2018، الهيئة العامة للإحصاء). أكبر من 1 = طلب أكبر من حجمه. الخط الأسود = 1 (توازن). المسح وطني وقديم نسبياً وبلا مناطق، فالعدسة <b>تعيد ترتيب</b> خانات «أولوية دعم» ولا تغيّر التوصية. ارتفاع «دعم العمل الخيري» قد يعكس احتساباً واسعاً للمستفيدين غير المباشرين. التخصصات المرتفعة معلّمة ▲ في المصفوفة.</div>
+<div class="card" id="c-demand"></div>
+<h3>ترتيب خانات «أولوية دعم» (بأرقام كافية) قبل وبعد عدسة الطلب</h3><div class="note">الناقص مرجّحاً = الجمعيات الناقصة × ضغط الطلب.</div><div class="card" style="overflow-x:auto"><table class="t" id="t-demand"></table></div>
+<div id="chal-wrap"><h3>ماذا تقول المنشآت؟ أبرز التحديات (مسح 2018)</h3><div class="card" id="c-chal"></div></div></section>
+
+<section id="s-2030"><h2>٥. فجوة 2030: كم جمعية تحتاج كل منطقة مع نمو السكان؟</h2>
+<div class="note" id="fc-note"></div>
+<div class="note"><span class="sw" style="background:#9db8c2"></span>الناقص اليوم <span class="sw" style="background:var(--or)"></span>الناقص في 2030 (مجموع التخصصات التي تقل عن المتوسط الوطني). مرّر الماوس على أي منطقة.</div>
+<div class="card" id="c-2030"></div>
+<h3>أكبر 10 خانات ناقصة في 2030 (بأرقام كافية)</h3><div class="card" style="overflow-x:auto"><table class="t" id="t-2030"></table></div></section>
+
+<section id="s-eff"><h2>٦. كيف تُصرف الأموال داخل القطاع؟ (2024، وطني)</h2>
+<div class="note">مؤشرات <b>هيكل التكلفة</b> من جداول الهيئة العامة للإحصاء. هي ليست قياساً للأثر، ونسبة رواتب مرتفعة لا تعني بالضرورة ضعف الكفاءة (خدمات قائمة على العاملين بطبيعتها). البيانات وطنية بلا تفصيل بالمنطقة.</div>
+<div class="grid2"><div><h3>الرواتب والتعويضات من المصروفات</h3><div class="card" id="c-eff"></div></div>
+<div><h3>المصروفات ÷ الإيرادات (برتقالي: أكثر من 100%)</h3><div class="card" id="c-eff2"></div></div></div>
+<h3>حصة القطاعات من إجمالي المصروفات</h3><div class="card" id="donut" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap"></div></section>
+
+<section id="s-waqf"><h2>٧. صرف الأوقاف عبر السنوات</h2><div class="note">مبالغ الصرف بالمليون ريال من ملف مبالغ الصرف. الخط المتقطع والنقاط المفرغة: سنتا 2024 و2025، لم يُتحقق من اكتمال بياناتهما في المصدر. اختر قطاعاً من القائمة.</div>
+<p class="noprint"><select id="waqf-sel"></select></p><div class="card" id="c-waqf"></div></section>
+
+<section id="s-sim"><h2>٨. جرّبي بنفسك: محاكي «ماذا لو؟»</h2>
+<div class="note">أضف جمعيات جديدة لمنطقة وتخصص، وشاهد كيف تتغير التوصيات والمؤشرات فوراً (يُعاد حساب المتوسط الوطني أيضاً). أو اطلب <b>توزيعاً مقترحاً</b>: كل جمعية تذهب للخانة الأقل تغطية نسبةً للمتوسط الوطني (ويمكن ترجيحها بضغط الطلب)، ثم يُعاد الحساب، مع تجاهل خانات «أرقام قليلة». أداة للتفكير وليست قراراً: العدد لا يعني جودة الخدمة.</div>
+<div class="card" id="sim">
+<div class="ctl"><label>المنطقة <select id="sim-r"></select></label><label>التخصص <select id="sim-g"></select></label><label>عدد الجمعيات <input id="sim-n" type="number" min="1" value="10"></label><button class="btn" id="sim-add">أضف للسيناريو</button><button class="btn g" id="sim-reset">إعادة ضبط</button></div>
+<div class="ctl"><label>أو وزّع تلقائياً <input id="sim-total" type="number" min="1" value="50"> جمعية</label><label><input type="checkbox" id="sim-dw"> رجّح بضغط الطلب (محصور بين 0.5× و2×)</label><button class="btn" id="sim-auto">اقترح توزيعاً</button><span class="delta">اضغط أي خانة في الجدول لاختيارها.</span></div>
+<div class="alloc" id="sim-alloc"></div><div class="kpis" id="sim-kpi"></div>
+<div style="overflow-x:auto"><table class="m" id="sim-m"></table></div></div></section>
+
+<section><h2>حدود التحليل</h2><div class="card"><ul class="lim" style="margin:0;padding-right:20px">
+<li>المؤشر هو <b>عدد الجمعيات المسجلة</b>، وليس حجم الخدمة المقدمة أو أثرها. لا يقيس مدرك الأثر النهائي لعدم توفر بيانات النتائج.</li>
+<li>المنطقة هي منطقة <b>التسجيل</b>، وقد تخدم الجمعية مناطق أخرى.</li>
+<li>الخانات ذات العدد القليل (أقل من 3 جمعيات) أو التخصصات الصغيرة وطنياً (أقل من 30) تُعلَّم «أرقام قليلة» وتُعدّ مؤشراً أولياً.</li>
+<li>التوصيات للمراجعة البشرية، وليست قراراً نهائياً. القرارات الثلاثة (استبعاد الوطني، استبعاد غير المصنف، المؤسسات كطبقة داعمة) إعدادات موثّقة بشرياً أدناه.</li>
+<li>جداول الهيئة 2024 وطنية على 11 قطاعاً، وبدون منطقة أو تفصيل للبرامج، ولا تشمل الأوقاف.</li></ul></div>
+<h3>القرارات والأعداد المستبعدة</h3><div class="card" style="overflow-x:auto"><table class="t" id="t-dec"></table></div></section>
+
+<footer>أُعدّ بالكامل بكود بايثون قابل لإعادة التشغيل من الملفات الخام (المصادر وروابطها في README). القرارات الإدارية بشرية، والمقترحات الآلية تُراجع قبل الاعتماد.</footer>
+</div><div id="tip"></div><script>
+const D = {"nat_total": 111, "nat_pop": 32175224, "nat_rate": 0.34, "regions": [{"region": "الشرقية", "population_2022": 5125254, "associations": 6, "per_100k_all_groups": 0.12, "index_vs_national": 0.35, "groups_below_half_national": 1}, {"region": "تبوك", "population_2022": 886036, "associations": 2, "per_100k_all_groups": 0.23, "index_vs_national": 0.67, "groups_below_half_national": 0}, {"region": "مكة المكرمة", "population_2022": 8021463, "associations": 20, "per_100k_all_groups": 0.25, "index_vs_national": 0.72, "groups_below_half_national": 0}, {"region": "الرياض", "population_2022": 8591748, "associations": 29, "per_100k_all_groups": 0.34, "index_vs_national": 0.99, "groups_below_half_national": 0}, {"region": "جازان", "population_2022": 1404997, "associations": 5, "per_100k_all_groups": 0.36, "index_vs_national": 1.04, "groups_below_half_national": 0}, {"region": "المدينة المنورة", "population_2022": 2137983, "associations": 9, "per_100k_all_groups": 0.42, "index_vs_national": 1.22, "groups_below_half_national": 0}, {"region": "الجوف", "population_2022": 595822, "associations": 3, "per_100k_all_groups": 0.5, "index_vs_national": 1.45, "groups_below_half_national": 0}, {"region": "عسير", "population_2022": 2024285, "associations": 11, "per_100k_all_groups": 0.54, "index_vs_national": 1.57, "groups_below_half_national": 0}, {"region": "القصيم", "population_2022": 1336179, "associations": 8, "per_100k_all_groups": 0.6, "index_vs_national": 1.74, "groups_below_half_national": 0}, {"region": "نجران", "population_2022": 592300, "associations": 4, "per_100k_all_groups": 0.68, "index_vs_national": 1.97, "groups_below_half_national": 0}, {"region": "الحدود الشمالية", "population_2022": 373577, "associations": 3, "per_100k_all_groups": 0.8, "index_vs_national": 2.32, "groups_below_half_national": 0}, {"region": "حائل", "population_2022": 746406, "associations": 7, "per_100k_all_groups": 0.94, "index_vs_national": 2.72, "groups_below_half_national": 0}, {"region": "الباحة", "population_2022": 339174, "associations": 4, "per_100k_all_groups": 1.18, "index_vs_national": 3.42, "groups_below_half_national": 0}], "groups": ["الجمعيات الرياضية"], "cells": [{"region": "الشرقية", "group": "الجمعيات الرياضية", "associations": 6, "population_2022": 5125254, "per_100k": 0.12, "national_per_100k": 0.34, "index_vs_national": 0.34, "missing_to_reach_national": 11.7, "recommendation": "أولوية دعم", "confidence": "كافية", "priority_rank": 1.0}, {"region": "الجوف", "group": "الجمعيات الرياضية", "associations": 3, "population_2022": 595822, "per_100k": 0.5, "national_per_100k": 0.34, "index_vs_national": 1.46, "missing_to_reach_national": 0.0, "recommendation": "تغطية مناسبة", "confidence": "كافية", "priority_rank": null}, {"region": "الرياض", "group": "الجمعيات الرياضية", "associations": 29, "population_2022": 8591748, "per_100k": 0.34, "national_per_100k": 0.34, "index_vs_national": 0.98, "missing_to_reach_national": 0.6, "recommendation": "تغطية مناسبة", "confidence": "كافية", "priority_rank": null}, {"region": "المدينة المنورة", "group": "الجمعيات الرياضية", "associations": 9, "population_2022": 2137983, "per_100k": 0.42, "national_per_100k": 0.34, "index_vs_national": 1.22, "missing_to_reach_national": 0.0, "recommendation": "تغطية مناسبة", "confidence": "كافية", "priority_rank": null}, {"region": "تبوك", "group": "الجمعيات الرياضية", "associations": 2, "population_2022": 886036, "per_100k": 0.23, "national_per_100k": 0.34, "index_vs_national": 0.65, "missing_to_reach_national": 1.1, "recommendation": "تغطية مناسبة", "confidence": "أرقام قليلة", "priority_rank": null}, {"region": "جازان", "group": "الجمعيات الرياضية", "associations": 5, "population_2022": 1404997, "per_100k": 0.36, "national_per_100k": 0.34, "index_vs_national": 1.03, "missing_to_reach_national": 0.0, "recommendation": "تغطية مناسبة", "confidence": "كافية", "priority_rank": null}, {"region": "مكة المكرمة", "group": "الجمعيات الرياضية", "associations": 20, "population_2022": 8021463, "per_100k": 0.25, "national_per_100k": 0.34, "index_vs_national": 0.72, "missing_to_reach_national": 7.7, "recommendation": "تغطية مناسبة", "confidence": "كافية", "priority_rank": null}, {"region": "الباحة", "group": "الجمعيات الرياضية", "associations": 4, "population_2022": 339174, "per_100k": 1.18, "national_per_100k": 0.34, "index_vs_national": 3.42, "missing_to_reach_national": 0.0, "recommendation": "تغطية عالية", "confidence": "كافية", "priority_rank": null}, {"region": "الحدود الشمالية", "group": "الجمعيات الرياضية", "associations": 3, "population_2022": 373577, "per_100k": 0.8, "national_per_100k": 0.34, "index_vs_national": 2.33, "missing_to_reach_national": 0.0, "recommendation": "تغطية عالية", "confidence": "كافية", "priority_rank": null}, {"region": "القصيم", "group": "الجمعيات الرياضية", "associations": 8, "population_2022": 1336179, "per_100k": 0.6, "national_per_100k": 0.34, "index_vs_national": 1.74, "missing_to_reach_national": 0.0, "recommendation": "تغطية عالية", "confidence": "كافية", "priority_rank": null}, {"region": "حائل", "group": "الجمعيات الرياضية", "associations": 7, "population_2022": 746406, "per_100k": 0.94, "national_per_100k": 0.34, "index_vs_national": 2.72, "missing_to_reach_national": 0.0, "recommendation": "تغطية عالية", "confidence": "كافية", "priority_rank": null}, {"region": "عسير", "group": "الجمعيات الرياضية", "associations": 11, "population_2022": 2024285, "per_100k": 0.54, "national_per_100k": 0.34, "index_vs_national": 1.58, "missing_to_reach_national": 0.0, "recommendation": "تغطية عالية", "confidence": "كافية", "priority_rank": null}, {"region": "نجران", "group": "الجمعيات الرياضية", "associations": 4, "population_2022": 592300, "per_100k": 0.68, "national_per_100k": 0.34, "index_vs_national": 1.96, "missing_to_reach_national": 0.0, "recommendation": "تغطية عالية", "confidence": "كافية", "priority_rank": null}], "shortfall": [{"region": "الشرقية", "missing": 11.7, "top": [{"group": "الجمعيات الرياضية", "missing": 11.7}]}, {"region": "تبوك", "missing": 1.1, "top": [{"group": "الجمعيات الرياضية", "missing": 1.1}]}, {"region": "مكة المكرمة", "missing": 7.7, "top": [{"group": "الجمعيات الرياضية", "missing": 7.7}]}, {"region": "الرياض", "missing": 0.6, "top": [{"group": "الجمعيات الرياضية", "missing": 0.6}]}, {"region": "جازان", "missing": 0.0, "top": []}, {"region": "المدينة المنورة", "missing": 0.0, "top": []}, {"region": "الجوف", "missing": 0.0, "top": []}, {"region": "عسير", "missing": 0.0, "top": []}, {"region": "القصيم", "missing": 0.0, "top": []}, {"region": "نجران", "missing": 0.0, "top": []}, {"region": "الحدود الشمالية", "missing": 0.0, "top": []}, {"region": "حائل", "missing": 0.0, "top": []}, {"region": "الباحة", "missing": 0.0, "top": []}], "n_prio": 1, "n_prio_conf": 1, "n_ok": 6, "n_high": 6, "conf_top": [{"region": "الشرقية", "group": "الجمعيات الرياضية", "associations": 6, "population_2022": 5125254, "per_100k": 0.12, "national_per_100k": 0.34, "index_vs_national": 0.34, "missing_to_reach_national": 11.7, "recommendation": "أولوية دعم", "confidence": "كافية", "priority_rank": 1.0}], "gaps": [{"region": "الشرقية", "group": "الجمعيات الرياضية", "associations": 6, "population_2022": 5125254, "per_100k": 0.12, "national_per_100k": 0.34, "index_vs_national": 0.34, "missing_to_reach_national": 11.7, "low_confidence": false}], "eff": null, "eff_tot": null, "decisions": [{"item": "config:exclude_national", "value": "True", "detail": ""}, {"item": "config:exclude_unclassified", "value": "True", "detail": ""}, {"item": "config:foundations_as_support", "value": "True", "detail": ""}, {"item": "config:low_ratio", "value": "0.5", "detail": ""}, {"item": "config:high_ratio", "value": "1.5", "detail": ""}, {"item": "config:min_national_count", "value": "30", "detail": ""}, {"item": "config:min_region_count", "value": "3", "detail": ""}, {"item": "config:priority", "value": "أولوية دعم", "detail": ""}, {"item": "config:ok", "value": "تغطية مناسبة", "detail": ""}, {"item": "config:high", "value": "تغطية عالية", "detail": ""}, {"item": "config:few", "value": "أرقام قليلة", "detail": ""}, {"item": "single_category", "value": "الجمعيات الرياضية", "detail": "الملف بلا عمود تصنيف: كل الكيانات تخصص واحد"}, {"item": "region_normalized", "value": "20", "detail": "توحيد أسماء المناطق في الذاكرة: {'strip': True, 'remove_prefix': 'المنطقة '}"}, {"item": "rows:Sport_Civil_Associations.xlsx", "value": "111", "detail": ""}, {"item": "population_total", "value": "32175224", "detail": "13 منطقة"}, {"item": "excluded_national_entities", "value": "0", "detail": "نطاق وطني لا يُنسب لمنطقة"}, {"item": "excluded_unclassified", "value": "0", "detail": "تصنيف غير معرّف في category_map"}, {"item": "rows_in_rate", "value": "111", "detail": "من 111"}, {"item": "national_per_100k_all_groups", "value": "0.34", "detail": "111 جمعية لكل 32,175,224 نسمة"}, {"item": "gaps_listed", "value": "1", "detail": "خلايا أقل من 0.5 من المتوسط الوطني"}, {"item": "decision:أولوية دعم", "value": "1", "detail": "منها 0 بأرقام قليلة"}, {"item": "decision:تغطية مناسبة", "value": "6", "detail": "منها 1 بأرقام قليلة"}, {"item": "decision:تغطية عالية", "value": "6", "detail": "منها 0 بأرقام قليلة"}], "waqf": null, "demand": null, "challenges": null, "fc": null};
+const $ = (s, r=document) => r.querySelector(s);
+const tip = $('#tip');
+function showTip(e, html){ tip.innerHTML = html; tip.style.display='block'; const w=tip.offsetWidth, x=Math.min(Math.max(8,e.clientX-w/2), innerWidth-w-8); tip.style.left=x+'px'; tip.style.top=(e.clientY+16)+'px'; }
+function hideTip(){ tip.style.display='none'; }
+function hover(el, fn){ el.addEventListener('mousemove', e=>showTip(e, fn())); el.addEventListener('mouseleave', hideTip); }
+function h(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+const f1 = x => (+x).toLocaleString('en',{maximumFractionDigits:1}), f2 = x => (+x).toLocaleString('en',{maximumFractionDigits:2});
+const LAB = {p:'أولوية دعم', o:'تغطية مناسبة', h:'تغطية عالية'}; const CLS = {'أولوية دعم':'p','تغطية مناسبة':'o','تغطية عالية':'h'};
+
+// ---- KPIs
+$('#kpis').innerHTML = [[D.nat_total.toLocaleString('en'),'جمعية مصنفة محسوبة'],[D.nat_rate,'جمعية لكل 100 ألف (وطنياً)'],[D.n_prio,'خانة «أولوية دعم» ('+D.n_prio_conf+' بأرقام كافية)']].concat(D.eff_tot?[[(D.eff_tot.comp_share*100).toFixed(1)+'%','الرواتب من المصروفات (2024)']]:[]).map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
+
+function unavailable(id, what){ const s=document.getElementById(id); const h2=s.querySelector('h2').outerHTML; s.innerHTML=h2+`<div class="card note">غير متوفر لهذه البيانات: لم يُزوَّد ${what}. القسم يظهر تلقائياً عند إضافته.</div>`; }
+
+// ---- 1) تغطية المناطق (أشرطة أفقية)
+(function(){ const box=$('#c-regions'), mx=Math.max(...D.regions.map(r=>r.per_100k_all_groups), D.nat_rate)*1.05;
+  D.regions.forEach(r=>{ const row=h('div','row'); const below=r.per_100k_all_groups<D.nat_rate;
+    row.innerHTML=`<div class="l">${r.region}</div><div class="track"><div class="fill" style="width:${r.per_100k_all_groups/mx*100}%;background:${below?'var(--or)':'var(--bl)'}"></div><div class="mark" style="right:${D.nat_rate/mx*100}%"></div></div><div class="v">${f2(r.per_100k_all_groups)}</div>`;
+    hover(row,()=>`<b>${r.region}</b><br>${r.associations.toLocaleString('en')} جمعية · ${r.population_2022.toLocaleString('en')} نسمة<br>${f2(r.per_100k_all_groups)} لكل 100 ألف (${f2(r.index_vs_national)}× المتوسط الوطني)<br>تخصصات تحت نصف المتوسط: ${r.groups_below_half_national}`);
+    box.appendChild(row); });
+})();
+
+// ---- 2) مصفوفة القرار
+(function(){ const regs=D.regions.map(r=>r.region), idx={}; D.cells.forEach(c=>idx[c.region+'|'+c.group]=c);
+  const DL={}; (D.demand||[]).forEach(d=>DL[d.group]=d);
+  let html='<tr><th>المنطقة</th>'+D.groups.map(g=>`<th data-g="${g}">${g}${DL[g]&&DL[g].demand_level==='ضغط مرتفع'?' ▲':''}</th>`).join('')+'</tr>';
+  regs.forEach(r=>{ html+=`<tr><td class="r">${r}</td>`+D.groups.map(g=>{ const c=idx[r+'|'+g]; return `<td class="${CLS[c.recommendation]}${c.confidence!=='كافية'?' few':''}" data-k="${r}|${g}">${c.recommendation}</td>`;}).join('')+'</tr>'; });
+  const t=$('#matrix'); t.innerHTML=html;
+  t.querySelectorAll('td[data-k]').forEach(td=>{ const c=idx[td.dataset.k]; hover(td,()=>`<b>${c.region} · ${c.group}</b><br>${c.associations} جمعية = ${f2(c.per_100k)} لكل 100 ألف<br>المتوسط الوطني للتخصص: ${f2(c.national_per_100k)} (المؤشر ${f2(c.index_vs_national)})<br>الناقص لبلوغ المتوسط: ≈${f1(c.missing_to_reach_national)}<br>الثقة: ${c.confidence}`+(c.demand_pressure!=null?`<br>ضغط الطلب على التخصص: ${f2(c.demand_pressure)} (${c.demand_level})`:'')); });
+  t.querySelectorAll('th[data-g]').forEach(th=>{ const d=DL[th.dataset.g]; if(d) hover(th,()=>`<b>${d.group}</b><br>${f2(d.beneficiaries_share_pct)}% من المستفيدين مقابل ${f2(d.establishments_share_pct)}% من المنشآت<br>ضغط الطلب: ${f2(d.demand_pressure)} (${d.demand_level})`); });
+  document.querySelectorAll('.chip[data-f]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('.chip[data-f]').forEach(x=>x.classList.remove('on')); b.classList.add('on'); const f=b.dataset.f; t.className='m'; if(f!=='all') t.classList.add('dim','f'+f); });
+})();
+
+// ---- 3) أعمدة: الناقص لكل منطقة
+(function(){ const box=$('#c-short'), mx=Math.max(...D.shortfall.map(s=>s.missing))*1.1||1, cols=h('div','cols'), xl=h('div','xl');
+  D.shortfall.forEach(s=>{ const c=h('div','col'); c.innerHTML=`<small>${Math.round(s.missing)}</small><div class="b" style="height:${s.missing/mx*100}%"></div>`;
+    hover(c,()=>`<b>${s.region}</b><br>مجموع الناقص لبلوغ المتوسط الوطني: ≈${f1(s.missing)} جمعية`+s.top.map(t=>`<br>· ${t.group}: ≈${f1(t.missing)}`).join(''));
+    cols.appendChild(c); xl.appendChild(h('div','',s.region)); }); box.appendChild(cols); box.appendChild(xl); })();
+
+// ---- 4) جدول أولويات
+(function(){ const rows=D.cells.filter(c=>c.recommendation==='أولوية دعم').sort((a,b)=>(a.confidence==='كافية'?0:1)-(b.confidence==='كافية'?0:1)||b.missing_to_reach_national-a.missing_to_reach_national);
+  $('#t-prio').innerHTML='<tr><th>المنطقة</th><th>التخصص</th><th>الجمعيات</th><th>لكل 100 ألف</th><th>المتوسط الوطني</th><th>الناقص ≈</th><th>الثقة</th></tr>'+rows.map(c=>`<tr><td>${c.region}</td><td>${c.group}</td><td>${c.associations}</td><td>${f2(c.per_100k)}</td><td>${f2(c.national_per_100k)}</td><td>${f1(c.missing_to_reach_national)}</td><td>${c.confidence}</td></tr>`).join(''); })();
+
+// ---- عدسة الطلب
+(function(){ if(!D.demand){ unavailable('s-demand','مسح منشآت القطاع غير الربحي (المستفيدون حسب التخصص)'); return; }
+  const box=$('#c-demand'), mx=Math.max(...D.demand.map(d=>d.demand_pressure),1)*1.05, col={'ضغط مرتفع':'var(--or)','متوازن':'#9db8c2','ضغط منخفض':'var(--bl)'};
+  D.demand.forEach(d=>{ const row=h('div','row'); row.innerHTML=`<div class="l" style="width:230px">${d.group}</div><div class="track"><div class="fill" style="width:${d.demand_pressure/mx*100}%;background:${col[d.demand_level]}"></div><div class="mark" style="right:${1/mx*100}%"></div></div><div class="v">${f2(d.demand_pressure)}×</div>`;
+    hover(row,()=>`<b>${d.group}</b><br>${f2(d.beneficiaries_share_pct)}% من المستفيدين ÷ ${f2(d.establishments_share_pct)}% من المنشآت<br>${d.demand_level}`); box.appendChild(row); });
+  const pr=D.cells.filter(c=>c.demand_rank!=null).sort((a,b)=>a.demand_rank-b.demand_rank);
+  $('#t-demand').innerHTML='<tr><th>الترتيب بعد الطلب</th><th>قبل</th><th>المنطقة</th><th>التخصص</th><th>الناقص ≈</th><th>ضغط الطلب</th><th>الناقص مرجّحاً</th></tr>'+pr.map(c=>{const d=c.priority_rank-c.demand_rank, ar=d>0?`<span style="color:var(--or)">▲${d}</span>`:d<0?`<span style="color:var(--bl)">▼${-d}</span>`:'—'; return `<tr><td><b>${c.demand_rank}</b> ${ar}</td><td>${c.priority_rank}</td><td>${c.region}</td><td>${c.group}</td><td>${f1(c.missing_to_reach_national)}</td><td>${f2(c.demand_pressure)}</td><td>${f1(c.weighted_missing)}</td></tr>`;}).join('');
+  if(D.challenges){ const cb=$('#c-chal'); [...D.challenges].sort((a,b)=>b.share_pct-a.share_pct).forEach((c,i)=>{ const row=h('div','row'); row.innerHTML=`<div class="l" style="width:250px">${c.challenge}</div><div class="track"><div class="fill" style="width:${c.share_pct/35*100}%;background:${i===0?'var(--or)':'var(--teal)'}"></div></div><div class="v">${f1(c.share_pct)}%</div>`; cb.appendChild(row); }); }
+  else $('#chal-wrap').style.display='none';
+})();
+
+// ---- فجوة 2030
+(function(){ if(!D.fc){ unavailable('s-2030','سلسلة السكان عبر السنوات'); return; } const F=D.fc;
+  $('#fc-note').innerHTML=`الطريقة: <b>${F.method}</b>، اختيرت آلياً لأنها الأقل خطأً في <b>اختبار رجعي بلا تسريب</b> (تدريب على 2010–2018 وتوقع 2022 ثم المقارنة بالتعداد): متوسط الخطأ ${f2(F.err)}%. `+(F.bias>0?'الطريقة بالغت قليلاً في الاختبار، فأرقام 2030 أقرب إلى <b>حد أعلى</b>. ':'')+'المعيار: المتوسط الوطني الحالي لكل تخصص، والعدد الحالي للجمعيات ثابت. سيناريو للتخطيط وليس إسقاطاً رسمياً.';
+  const R=[...F.regions].sort((a,b)=>b.missing_2030-a.missing_2030), mx=Math.max(...R.map(r=>r.missing_2030))*1.1||1, cols=h('div','cols'), xl=h('div','xl');
+  R.forEach(r=>{ const c=h('div','col'); c.style.flexDirection='row'; c.style.alignItems='flex-end'; c.style.gap='2px';
+    c.innerHTML=`<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;align-items:center"><small>${Math.round(r.missing_today)}</small><div class="b" style="height:${r.missing_today/mx*100}%;background:#9db8c2"></div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;align-items:center"><small>${Math.round(r.missing_2030)}</small><div class="b" style="height:${r.missing_2030/mx*100}%;background:var(--or)"></div></div>`;
+    hover(c,()=>`<b>${r.region}</b><br>السكان: ${(+r.pop_2022).toLocaleString('en')} ← ${(+r.pop_2030).toLocaleString('en')} (+${r.growth_pct}%)<br>الناقص اليوم ≈${f1(r.missing_today)} ← 2030 ≈${f1(r.missing_2030)}<br>إضافي بسبب النمو ≈${f1(r.extra_by_2030)}`);
+    cols.appendChild(c); xl.appendChild(h('div','',r.region)); }); $('#c-2030').append(cols, xl);
+  $('#t-2030').innerHTML='<tr><th>المنطقة</th><th>التخصص</th><th>الجمعيات اليوم</th><th>المطلوب 2030</th><th>الناقص اليوم</th><th>الناقص 2030</th></tr>'+F.cells.map(c=>`<tr><td>${c.region}</td><td>${c.group}</td><td>${c.associations}</td><td>${f1(c.needed_2030)}</td><td>${f1(c.missing_to_reach_national)}</td><td><b>${f1(c.missing_2030)}</b></td></tr>`).join('');
+})();
+
+// ---- 5) الكفاءة
+(function(){ if(!D.eff){ unavailable('s-eff','جدول الإيرادات والمصروفات حسب القطاع'); return; } const box=$('#c-eff'), E=D.eff;
+  E.forEach(e=>{ const row=h('div','row'); row.innerHTML=`<div class="l" style="width:190px">${e.sector}</div><div class="track"><div class="fill" style="width:${e.compensation_share_of_expenditure*100}%;background:var(--teal)"></div></div><div class="v">${(e.compensation_share_of_expenditure*100).toFixed(1)}%</div>`;
+    hover(row,()=>`<b>${e.sector}</b><br>الرواتب: ${f2(e.compensation_bn)} مليار من مصروفات ${f2(e.expenditure_bn)} مليار<br>المصروفات ÷ الإيرادات: ${(e.expenditure_to_revenue*100).toFixed(0)}%`); box.appendChild(row); });
+  const b2=$('#c-eff2'); [...E].sort((a,b)=>b.expenditure_to_revenue-a.expenditure_to_revenue).forEach(e=>{ const row=h('div','row'), over=e.expenditure_to_revenue>1; row.innerHTML=`<div class="l" style="width:190px">${e.sector}</div><div class="track"><div class="fill" style="width:${Math.min(e.expenditure_to_revenue,1.1)/1.1*100}%;background:${over?'var(--or)':'#6b9aa8'}"></div><div class="mark" style="right:${100/1.1}%;left:auto;transform:translateX(1px)"></div></div><div class="v">${(e.expenditure_to_revenue*100).toFixed(0)}%</div>`;
+    hover(row,()=>`<b>${e.sector}</b><br>إيرادات ${f2(e.revenue_bn)} مليار · مصروفات ${f2(e.expenditure_bn)} مليار`); b2.appendChild(row); });
+  // donut: حصة المصروفات (أكبر 5 + أخرى)
+  const s=[...E].sort((a,b)=>b.expenditure_bn-a.expenditure_bn), top=s.slice(0,5), rest=s.slice(5), parts=top.map(e=>({n:e.sector,v:e.expenditure_bn})); parts.push({n:'قطاعات أخرى ('+rest.length+')',v:rest.reduce((a,e)=>a+e.expenditure_bn,0)});
+  const tot=parts.reduce((a,p)=>a+p.v,0), pal=['#1F4E5F','#2166AC','#6b9aa8','#D95F02','#9db8c2','#c9d3d8']; let a0=-Math.PI/2, R=80, r=48, svg='';
+  parts.forEach((p,i)=>{ const a1=a0+p.v/tot*2*Math.PI, lg=(a1-a0)>Math.PI?1:0, P=(rad,a)=>[100+rad*Math.cos(a),100+rad*Math.sin(a)];
+    const [x0,y0]=P(R,a0),[x1,y1]=P(R,a1),[x2,y2]=P(r,a1),[x3,y3]=P(r,a0); svg+=`<path data-i="${i}" d="M${x0},${y0}A${R},${R} 0 ${lg} 1 ${x1},${y1}L${x2},${y2}A${r},${r} 0 ${lg} 0 ${x3},${y3}Z" fill="${pal[i]}" stroke="var(--bg)" stroke-width="1.5"/>`; a0=a1; });
+  const dn=$('#donut'); dn.innerHTML=`<svg viewBox="0 0 200 200" width="210" height="210">${svg}<text x="100" y="97" text-anchor="middle" font-size="18" font-weight="700" fill="var(--fg)">${tot.toFixed(1)}</text><text x="100" y="114" text-anchor="middle" font-size="10" fill="var(--mut)">مليار ر.س</text></svg><div class="lg2">`+parts.map((p,i)=>`<div><span class="sw" style="background:${pal[i]}"></span>${p.n} <b>${(p.v/tot*100).toFixed(0)}%</b></div>`).join('')+'</div>';
+  dn.querySelectorAll('path').forEach(p=>hover(p,()=>{const q=parts[+p.dataset.i]; return `<b>${q.n}</b><br>${f2(q.v)} مليار ر.س (${(q.v/tot*100).toFixed(1)}% من مصروفات القطاع)`;}));
+})();
+
+// ---- 6) الخط الزمني للوقف
+(function(){ const W=D.waqf, box=$('#c-waqf'); if(!W){ unavailable('s-waqf','ملف مبالغ الصرف عبر السنوات'); return; }
+  const sel=$('#waqf-sel'); sel.innerHTML='<option value="">إجمالي كل القطاعات</option>'+W.sectors.map(s=>`<option>${s}</option>`).join('');
+  function draw(){ const sec=sel.value, pts=W.years.map(y=>({y, v:W.rows.filter(r=>r.year===y&&(!sec||r.sector===sec)).reduce((a,r)=>a+r.amount,0)}));
+    const w=820,hh=300,m={l:50,r:20,t:20,b:34}, mx=Math.max(...pts.map(p=>p.v))*1.15||1, X=i=>m.l+i*(w-m.l-m.r)/(pts.length-1), Y=v=>hh-m.b-v/mx*(hh-m.t-m.b);
+    let s=`<svg viewBox="0 0 ${w} ${hh}" width="100%" direction="ltr">`; for(let k=0;k<=4;k++){ const v=mx*k/4; s+=`<line x1="${m.l}" x2="${w-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${m.l-6}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="var(--mut)">${Math.round(v)}</text>`; }
+    const cut=pts.findIndex(p=>p.y>=2024), solid=cut<0?pts:pts.slice(0,cut+1), rest=cut<0?[]:pts.slice(cut-1<0?0:cut-1);
+    const path=a=>a.map((p,i)=>(i?'L':'M')+X(pts.indexOf(p))+','+Y(p.v)).join('');
+    s+=`<path d="${path(cut<0?pts:pts.slice(0,cut))}" fill="none" stroke="var(--teal)" stroke-width="2.5"/>`; if(cut>0) s+=`<path d="${path(pts.slice(cut-1))}" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-dasharray="6 5"/>`;
+    pts.forEach((p,i)=>{ s+=`<circle data-i="${i}" cx="${X(i)}" cy="${Y(p.v)}" r="5" fill="${p.y>=2024?'var(--bg)':'var(--teal)'}" stroke="var(--teal)" stroke-width="2"/><text x="${X(i)}" y="${hh-12}" text-anchor="middle" font-size="12" fill="var(--mut)">${p.y}</text>`; });
+    s+='</svg>'; box.innerHTML=s; box.querySelectorAll('circle').forEach(c=>hover(c,()=>{const p=pts[+c.dataset.i]; return `<b>${p.y}</b><br>${p.v.toLocaleString('en')} مليون ر.س`+(p.y>=2024?'<br><i>لم يُتحقق من اكتمال بيانات هذه السنة</i>':'');})); }
+  sel.onchange=draw; draw(); })();
+
+// ---- محاكي «ماذا لو؟»
+(function(){
+  const cfgv=k=>{const d=D.decisions.find(x=>x.item==='config:'+k); return d?+d.value:null;};
+  const LOW=cfgv('low_ratio')??0.5, HIGH=cfgv('high_ratio')??1.5, MINR=cfgv('min_region_count')??3, MINN=cfgv('min_national_count')??30;
+  const regs=D.regions.map(r=>r.region), POP={}; D.regions.forEach(r=>POP[r.region]=r.population_2022);
+  const natPop=regs.reduce((a,r)=>a+POP[r],0), base={}; D.cells.forEach(c=>base[c.region+'|'+c.group]=c);
+  const PRESS={}; (D.demand||[]).forEach(d=>PRESS[d.group]=d.demand_pressure);
+  let adds={};
+  function compute(A){ const natCnt={}; D.groups.forEach(g=>natCnt[g]=regs.reduce((a,r)=>a+base[r+'|'+g].associations+(A[r+'|'+g]||0),0));
+    const out={}; regs.forEach(r=>D.groups.forEach(g=>{ const k=r+'|'+g, cnt=base[k].associations+(A[k]||0), nr=natCnt[g]/natPop*1e5, rate=cnt/POP[r]*1e5, idx=nr>0?Math.round(rate/nr*100)/100:0;   // نفس تقريب جدول التحليل (منزلتان) لتطابق التوصيات الأصلية
+      out[k]={cnt,rate,idx,nr,rec:idx<LOW?'أولوية دعم':idx>=HIGH?'تغطية عالية':'تغطية مناسبة',few:cnt<MINR||natCnt[g]<MINN,miss:Math.max(nr*POP[r]/1e5-cnt,0)}; })); return out; }
+  const B=compute({});
+  const sumStats=S=>{ const v=Object.values(S); return {prio:v.filter(x=>x.rec==='أولوية دعم'&&!x.few).length, prioAll:v.filter(x=>x.rec==='أولوية دعم').length, miss:v.reduce((a,x)=>a+x.miss,0)}; };
+  const rs=$('#sim-r'), gs=$('#sim-g'); rs.innerHTML=regs.map(r=>`<option>${r}</option>`).join(''); gs.innerHTML=D.groups.map(g=>`<option>${g}</option>`).join('');
+  const first=D.cells.find(c=>c.recommendation==='أولوية دعم'&&c.confidence==='كافية'); if(first){ rs.value=first.region; gs.value=first.group; }
+  function render(){ const S=compute(adds), b=sumStats(B), a=sumStats(S), n=Object.values(adds).reduce((x,y)=>x+y,0);
+    $('#sim-kpi').innerHTML=[[n,'جمعية جديدة في السيناريو',''],[a.prio,'خانة «أولوية دعم» بأرقام كافية',`قبل: ${b.prio}`],[a.prioAll,'خانة «أولوية دعم» (الكل)',`قبل: ${b.prioAll}`],[Math.round(a.miss).toLocaleString('en'),'مجموع الناقص لبلوغ المتوسط',`قبل: ${Math.round(b.miss).toLocaleString('en')}`]].map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span><div class="delta">${k[2]}</div></div>`).join('');
+    $('#sim-alloc').innerHTML=n?Object.entries(adds).map(([k,v])=>`<span>${k.replace('|',' · ')}: +${v}<b data-k="${k}" title="حذف">✕</b></span>`).join(''):'<span>لا توجد إضافات بعد</span>';
+    $('#sim-alloc').querySelectorAll('b[data-k]').forEach(x=>x.onclick=()=>{ delete adds[x.dataset.k]; render(); });
+    let html='<tr><th>المنطقة</th>'+D.groups.map(g=>`<th>${g}</th>`).join('')+'</tr>';
+    regs.forEach(r=>{ html+=`<tr><td class="r">${r}</td>`+D.groups.map(g=>{ const k=r+'|'+g, x=S[k], y=B[k], ch=x.rec!==y.rec; return `<td data-k="${k}" class="${CLS[x.rec]}${x.few?' few':''}${adds[k]?' add':''}">${x.rec}${ch?`<span class="chg">كانت: ${y.rec}</span>`:''}</td>`;}).join('')+'</tr>'; });
+    const t=$('#sim-m'); t.innerHTML=html;
+    t.querySelectorAll('td[data-k]').forEach(td=>{ const k=td.dataset.k, x=S[k], y=B[k]; hover(td,()=>`<b>${k.replace('|',' · ')}</b><br>الجمعيات: ${y.cnt} ← <b>${x.cnt}</b><br>لكل 100 ألف: ${f2(y.rate)} ← <b>${f2(x.rate)}</b><br>المؤشر: ${f2(y.idx)} ← <b>${f2(x.idx)}</b><br>الناقص: ≈${f1(y.miss)} ← <b>≈${f1(x.miss)}</b>`);
+      td.onclick=()=>{ const [r,g]=k.split('|'); rs.value=r; gs.value=g; }; }); }
+  $('#sim-add').onclick=()=>{ const k=rs.value+'|'+gs.value, n=Math.max(0,Math.round(+$('#sim-n').value||0)); if(n){ adds[k]=(adds[k]||0)+n; render(); } };
+  $('#sim-reset').onclick=()=>{ adds={}; render(); };
+  $('#sim-auto').onclick=()=>{ const N=Math.max(0,Math.round(+$('#sim-total').value||0)); adds={};
+    for(let i=0;i<N;i++){ const S=compute(adds); let best=null,bv=Infinity; for(const k in S){ const x=S[k]; if(x.few||x.idx>=1) continue; const pw=$('#sim-dw').checked?Math.min(Math.max(PRESS[k.split('|')[1]]??1,0.5),2):1, v=x.idx/pw; if(best===null||v<bv){bv=v;best=k;} } if(!best) break; adds[best]=(adds[best]||0)+1; }
+    render(); };
+  render();
+})();
+
+// ---- 7) قرارات التحليل
+const DEC={'config:exclude_national':'استبعاد الكيانات الوطنية من المناطق','config:exclude_unclassified':'استبعاد غير المصنف / المنشأة بأمر ملكي','config:foundations_as_support':'المؤسسات طبقة داعمة خارج المعدل','config:low_ratio':'حد «أولوية دعم» (نسبة إلى المتوسط الوطني)','config:high_ratio':'حد «تغطية عالية» (نسبة إلى المتوسط الوطني)','config:min_national_count':'أدنى عدد وطني للتخصص ليُعتمد','config:min_region_count':'أدنى عدد جمعيات في الخانة ليُعتمد','rows:Non_profit_Associations_clean.csv':'عدد الجمعيات بعد التنظيف','rows:Non_profit_Foundations_clean.csv':'عدد المؤسسات بعد التنظيف','population_total':'إجمالي السكان (تعداد 2022)','excluded_national_entities':'كيانات وطنية مستبعدة','excluded_unclassified':'جمعيات غير مصنفة مستبعدة','rows_in_rate':'جمعيات داخل الحساب','national_per_100k_all_groups':'المتوسط الوطني لكل 100 ألف','gaps_listed':'خانات أقل من نصف المتوسط','foundations_in_support_layer':'مؤسسات في الطبقة الداعمة'};
+const yn=v=>v==='True'?'نعم':v==='False'?'لا':v;
+$('#t-dec').innerHTML='<tr><th>البند</th><th>القيمة</th><th>التفصيل</th></tr>'+D.decisions.filter(d=>DEC[d.item]||d.item.startsWith('decision:')).map(d=>`<tr><td>${DEC[d.item]||('توصية: '+d.item.split(':')[1])}</td><td>${yn(String(d.value))}</td><td>${d.detail}</td></tr>`).join('');
+
+// ---- تحميل CSV
+function csv(rows){ const cols=Object.keys(rows[0]); return '﻿'+cols.join(',')+'\n'+rows.map(r=>cols.map(c=>{let v=r[c]; v=(v===null||v===undefined)?'':String(v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(',')).join('\n'); }
+document.querySelectorAll('button.dl').forEach(b=>b.onclick=()=>{ const rows=D[b.dataset.k]; const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv(rows)],{type:'text/csv;charset=utf-8'})); a.download=b.dataset.n+'.csv'; a.click(); });
+</script></body></html>

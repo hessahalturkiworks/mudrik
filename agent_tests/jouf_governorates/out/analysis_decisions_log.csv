@@ -1,0 +1,29 @@
+﻿item,value,detail
+config:exclude_national,True,
+config:exclude_unclassified,True,
+config:foundations_as_support,True,
+config:exclude_unmatched_units,True,
+config:low_ratio,0.5,
+config:high_ratio,1.5,
+config:min_national_count,30,
+config:min_region_count,3,
+config:priority,أولوية دعم,
+config:ok,تغطية مناسبة,
+config:high,تغطية عالية,
+config:few,أرقام قليلة,
+config:comparison_label,متوسط منطقة الجوف,
+config:unit_label,المحافظة,
+single_category,كل التخصصات,الملف بلا عمود تصنيف: كل الكيانات تخصص واحد
+region_normalized,0,توحيد أسماء المناطق في الذاكرة: {'strip': True}
+rows:Non_profit_entities_in_the_Al_Jouf_region.xlsx,62,
+population_filter,region_key = الجوف,4 وحدة
+population_total,595822,4 المحافظة
+excluded_national_entities,0,نطاق وطني لا يُنسب لمنطقة
+excluded_unclassified,0,تصنيف غير معرّف في category_map
+excluded_unmatched_units,12,صوير (2)، الناصفة (2)، الأضارع (2)، الجوف (1)، ابو عجرم (1)، العيساوية (1)، غطي (1)، ميقوع (1)، الرياض (1)
+rows_in_rate,50,من 62
+national_per_100k_all_groups,8.39,"50 جمعية لكل 595,822 نسمة"
+gaps_listed,0,خلايا أقل من 0.5 من المتوسط الوطني
+decision:أولوية دعم,0,منها 0 بأرقام قليلة
+decision:تغطية مناسبة,3,منها 0 بأرقام قليلة
+decision:تغطية عالية,1,منها 0 بأرقام قليلة

@@ -1,0 +1,87 @@
+{
+  "_ملاحظة": "كل ما يخص بياناتك وقراراتك هنا. غيّري هذا الملف لتشغيل نفس التحليل على بيانات أخرى، دون لمس الكود.",
+  "decisions": {
+    "exclude_national": true,
+    "exclude_unclassified": true,
+    "foundations_as_support": true
+  },
+  "thresholds": {
+    "low_ratio": 0.5,
+    "high_ratio": 1.5,
+    "min_national_count": 30,
+    "min_region_count": 3
+  },
+  "labels": {
+    "priority": "أولوية دعم",
+    "ok": "تغطية مناسبة",
+    "high": "تغطية عالية",
+    "few": "أرقام قليلة"
+  },
+  "entity_columns": {
+    "name": "Name",
+    "region": "Nonprofits Region → Region Name",
+    "category": "Qualitative Classification"
+  },
+  "population_columns": {
+    "region_key": "region_key",
+    "population": "population_2022"
+  },
+  "expected_population_total": 32175224,
+  "national_region_prefix": "كافة",
+  "category_map": [
+    {
+      "prefix": "الثقافة",
+      "label": "الثقافة والترفيه"
+    },
+    {
+      "prefix": "التعليم والأبحاث",
+      "label": "التعليم والأبحاث"
+    },
+    {
+      "prefix": "الصحة",
+      "label": "الصحة"
+    },
+    {
+      "prefix": "الخدمات الصحية",
+      "label": "الصحة"
+    },
+    {
+      "prefix": "الخدمات الاجتماعية",
+      "label": "الخدمات الاجتماعية"
+    },
+    {
+      "prefix": "البيئة",
+      "label": "البيئة"
+    },
+    {
+      "prefix": "التنمية",
+      "label": "التنمية والإسكان"
+    },
+    {
+      "prefix": "التأييد",
+      "label": "التأييد والمؤازرة"
+    },
+    {
+      "prefix": "منظمات دعم العمل الخيري",
+      "label": "دعم العمل الخيري"
+    },
+    {
+      "prefix": "دعم العمل الخيري",
+      "label": "دعم العمل الخيري"
+    },
+    {
+      "prefix": "منظمات الدعوة",
+      "label": "الدعوة والتعليم الديني وضيوف الرحمن"
+    },
+    {
+      "prefix": "الروابط المهنية",
+      "label": "الروابط المهنية"
+    }
+  ],
+  "funder_category_label": "دعم العمل الخيري",
+  "entity_sheet": "البيانات",
+  "region_normalize": {
+    "strip": true,
+    "remove_prefix": "المنطقة "
+  }
+}

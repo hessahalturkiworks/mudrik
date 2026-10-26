@@ -1,0 +1,31 @@
+﻿item,value,detail
+config:exclude_national,True,
+config:exclude_unclassified,True,
+config:foundations_as_support,True,
+config:exclude_unmatched_units,True,
+config:low_ratio,0.5,
+config:high_ratio,1.5,
+config:min_national_count,30,
+config:min_region_count,3,
+config:priority,أولوية دعم,
+config:ok,تغطية مناسبة,
+config:high,تغطية عالية,
+config:few,أرقام قليلة,
+config:comparison_label,متوسط 12 منطقة (دون عسير),
+config:entity_singular,حلقة,
+config:entity_plural,حلقات,
+config:extra_limit,الملف من إحصائية جمعيات تحفيظ القرآن 2024، والسكان من تعداد 2022. عدد الجمعيات في هذا الملف 307 مقابل 247 في السجل الوطني للجمعيات (التصنيف الفرعي «العناية بالقرآن الكريم»)؛ الفرق 60 (24%) ويرجح أنه بسبب اختلاف الجهة وتاريخ التحديث وربما احتساب الفروع. أعداد الطلاب لم تدخل الحساب (قرار صاحبة المشروع): في الرياض 77 طالباً لكل حلقة مقابل 14–34 في بقية المناطق، ونحو نصف طلابها غير سعوديين، ولا يُعرف السبب من الملف. عسير مستبعدة من هذا التقرير: 400 حلقة و705 مدرسين لـ395 طالباً فقط (بيانات غير متسقة)، والمتوسط محسوب على 12 منطقة. الحلقة وحدة تختلف في حجمها ومدتها بين الجمعيات.,
+single_category,حلقات التحفيظ,الملف بلا عمود تصنيف: كل الكيانات تخصص واحد
+region_normalized,6,"توحيد أسماء المناطق في الذاكرة: {'strip': True, 'remove_prefix': ['المنطقة']}"
+count_columns,36467,ملف مجمّع؛ العدد = عدد الحلقات
+rows:quran_by_region.csv,13,
+population_total,30150939,12 منطقة
+excluded_national_entities,0,نطاق وطني لا يُنسب لمنطقة
+excluded_unclassified,0,تصنيف غير معرّف في category_map
+excluded_unmatched_units,1,عسير (1)
+rows_in_rate,12,من 13
+national_per_100k_all_groups,119.62,"36067 جمعية لكل 30,150,939 نسمة"
+gaps_listed,1,خلايا أقل من 0.5 من المتوسط الوطني
+decision:أولوية دعم,1,منها 0 بأرقام قليلة
+decision:تغطية مناسبة,10,منها 0 بأرقام قليلة
+decision:تغطية عالية,1,منها 0 بأرقام قليلة

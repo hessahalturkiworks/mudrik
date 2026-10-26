@@ -1,0 +1,47 @@
+{
+  "_ملاحظة": "كل ما يخص بياناتك وقراراتك هنا. غيّري هذا الملف لتشغيل نفس التحليل على بيانات أخرى، دون لمس الكود.",
+  "decisions": {
+    "exclude_national": true,
+    "exclude_unclassified": true,
+    "foundations_as_support": true,
+    "exclude_unmatched_units": true
+  },
+  "thresholds": {
+    "low_ratio": 0.5,
+    "high_ratio": 1.5,
+    "min_national_count": 30,
+    "min_region_count": 3
+  },
+  "labels": {
+    "priority": "أولوية دعم",
+    "ok": "تغطية مناسبة",
+    "high": "تغطية عالية",
+    "few": "أرقام قليلة"
+  },
+  "entity_header_row": 1,
+  "entity_columns": {
+    "name": "اسم الكيان",
+    "region": "المدينة",
+    "category": null
+  },
+  "single_category_label": "كل التخصصات",
+  "category_map": [
+    {
+      "prefix": "كل التخصصات",
+      "label": "كل التخصصات"
+    }
+  ],
+  "population_columns": {
+    "region_key": "governorate_ar",
+    "population": "population_2022"
+  },
+  "population_filter": {
+    "region_key": "الجوف"
+  },
+  "expected_population_total": 595822,
+  "region_normalize": {
+    "strip": true
+  },
+  "comparison_label": "متوسط منطقة الجوف",
+  "unit_label": "المحافظة"
+}
