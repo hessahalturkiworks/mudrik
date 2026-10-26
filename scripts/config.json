@@ -1,0 +1,84 @@
+{
+  "_ملاحظة": "كل ما يخص بياناتك وقراراتك هنا. غيّري هذا الملف لتشغيل نفس التحليل على بيانات أخرى، دون لمس الكود.",
+  "decisions": {
+    "exclude_national": true,
+    "exclude_unclassified": true,
+    "foundations_as_support": true
+  },
+  "thresholds": {
+    "low_ratio": 0.5,
+    "high_ratio": 1.5,
+    "min_national_count": 30,
+    "min_region_count": 3
+  },
+  "labels": {
+    "priority": "أولوية دعم",
+    "ok": "تغطية مناسبة",
+    "high": "تغطية عالية",
+    "few": "أرقام قليلة"
+  },
+  "entity_columns": {
+    "name": "اسم الكيان",
+    "region": "المنطقة الإدارية",
+    "category": "التصنيف النوعي"
+  },
+  "population_columns": {
+    "region_key": "region_key",
+    "population": "population_2022"
+  },
+  "expected_population_total": 32175224,
+  "national_region_prefix": "كافة",
+  "category_map": [
+    {
+      "prefix": "المجموعة الأولى",
+      "label": "الثقافة والترفيه"
+    },
+    {
+      "prefix": "المجموعة الثانية",
+      "label": "التعليم والأبحاث"
+    },
+    {
+      "prefix": "المجموعة الثالثة",
+      "label": "الصحة"
+    },
+    {
+      "prefix": "المجموعة الرابعة",
+      "label": "الخدمات الاجتماعية"
+    },
+    {
+      "prefix": "المجموعة الخامسة",
+      "label": "البيئة"
+    },
+    {
+      "prefix": "المجموعة السادسة",
+      "label": "التنمية والإسكان"
+    },
+    {
+      "prefix": "المجموعة السابعة",
+      "label": "التأييد والمؤازرة"
+    },
+    {
+      "prefix": "المجموعة الثامنة",
+      "label": "دعم العمل الخيري"
+    },
+    {
+      "prefix": "المجموعة التاسعة",
+      "label": "الدعوة والتعليم الديني وضيوف الرحمن"
+    },
+    {
+      "prefix": "المجموعة العاشرة",
+      "label": "الروابط المهنية"
+    }
+  ],
+  "funder_category_label": "دعم العمل الخيري",
+  "demand": {
+    "_ملاحظة": "عدسة الطلب: ضغط التخصص = حصة المستفيدين ÷ حصة المنشآت. قرار بشري: حدود التصنيف.",
+    "high": 1.2,
+    "low": 0.8,
+    "labels": {
+      "high": "ضغط مرتفع",
+      "mid": "متوازن",
+      "low": "ضغط منخفض"
+    }
+  }
+}

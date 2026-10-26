@@ -1,0 +1,8 @@
+﻿step,status,seconds
+Clean associations + foundations (dq_check),ok,9.2
+Prepare population 2010-2022 (prepare_population),ok,1.1
+Population by governorate (prepare_governorates),ok,0.8
+Extract 2018 establishments survey (extract_survey2018),ok,1.2
+Gap analysis + decision matrix (run_analysis),ok,3.7
+2030 gap forecast (forecast_2030),ok,1.4
+Interactive report (build_report),ok,3.2
