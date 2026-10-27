@@ -2,6 +2,10 @@
 
 **هاكثون تحليل البيانات في القطاع غير الربحي 2** · ملتقى تحليل البيانات · جمعية كفاءات الأهلية
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hessahalturkiworks/mudrik/blob/main/analysis.ipynb) ← اضغط للتشغيل في Google Colab، ثم من القائمة `Runtime` اختر `Run all`.
+
+📄 **التقرير النهائي:** [mudrik_report.pdf](mudrik_report.pdf)
+
 مدرك أداة تحليل ووكيل ذكاء اصطناعي يجيبان عن سؤال واحد يطرحه المتبرع والجهة المانحة وصانع القرار:
 **في أي منطقة، وفي أي تخصص، يقل عدد الجمعيات الأهلية عن حاجة السكان؟ وأين يذهب الدعم الجديد بأكبر فائدة؟**
 
