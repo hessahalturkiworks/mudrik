@@ -34,8 +34,8 @@ description: يحلل فجوات الخدمات في القطاع غير الر�
 ## الخطوات
 1. **الفحص ثم التنظيف** (اقرأ `prompts/data_audit.md` ثم `prompts/cleaning.md`): `python scripts/run_pipeline.py`. ينظّف الملفات (بدون إضافة أعمدة ولا تخمين) ويطبع القرارات ثم **يتوقف** برمز خروج 3.
 2. **اعرض القرارات على الإنسان** (انظر «نقاط التوقف»). لا تمرّر `--yes` قبل موافقة صريحة.
-3. **بعد الموافقة:** `python scripts/run_pipeline.py --yes` (أو `--skip-clean --yes` لو التنظيف جاهز). يشغّل التحليل وفجوة 2030 والتقرير.
-4. **تحقق** (القسم التالي) ثم سلّم `outputs/report.html` و`report.pdf`.
+3. **بعد الموافقة:** `python scripts/run_pipeline.py --yes` (أو `--skip-clean --yes` لو التنظيف جاهز). يشغّل التحليل وفجوة 2030 والداشبورد.
+4. **تحقق** (القسم التالي) ثم سلّم `outputs/dashboard.html` و`gap_cards.csv`.
 5. **الملخص التنفيذي** (اقرأ `prompts/executive_report.md`): املأ `templates/impact_report.md` من ملفات `outputs/` فقط.
 
 ## نقاط التوقف البشرية (إلزامية)
@@ -57,7 +57,7 @@ description: يحلل فجوات الخدمات في القطاع غير الر�
 - مجموع السكان يطابق التعداد، وكل منطقة في الكيانات لها سكان (الكود يوقف عند الخلل).
 - مجموع خلايا (منطقة × تخصص) = عدد الجمعيات المحسوبة (الكود يتحقق).
 - `outputs/analysis_decisions_log.csv` يذكر عدد المستبعدين والقرارات والعتبات.
-- افتح `report.html` وتأكد من الأرقام الرئيسية في الملخص مقابل `outputs/tables/`.
+- افتح `dashboard.html` وتأكد من الأرقام الرئيسية في الملخص مقابل `outputs/tables/`.
 - أعد التشغيل وقارن الجداول: يجب أن تتطابق (قابلية إعادة التشغيل).
 
 ## ممنوعات
@@ -81,4 +81,4 @@ description: يحلل فجوات الخدمات في القطاع غير الر�
 الأمر الذي طُلب، ما اقترحه الوكيل، ما وافق عليه الإنسان أو رفضه، التحقق الذي جرى (وكيف)، وأي تعديل في `config.json`.
 
 ## المخرجات
-`outputs/report.html` (تفاعلي) و`report.pdf` و`tables/` (CSV وxlsx) و`figures/` و`analysis_decisions_log.csv` و`pipeline_log.csv` و`cleaning/` (تقارير جودة التنظيف).
+`outputs/dashboard.html` (تفاعلي) و`gap_cards.csv/json` و`tables/` (CSV وxlsx) و`figures/` و`analysis_decisions_log.csv` و`pipeline_log.csv` و`cleaning/` (تقارير جودة التنظيف).

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-run_pipeline.py — يشغّل مدرك كاملاً بالترتيب: تنظيف ← تحليل ← تقرير.
+run_pipeline.py — يشغّل مدرك كاملاً بالترتيب: تنظيف ← تحليل ← داشبورد.
 هذا هو الأمر الذي يستدعيه الوكيل (انظر SKILL.md). يوقف قبل التحليل حتى يوافق الإنسان على القرارات.
 
   python scripts/run_pipeline.py                 # يُنظّف ثم يعرض القرارات ويتوقف (رمز الخروج 3)
@@ -8,7 +8,7 @@ run_pipeline.py — يشغّل مدرك كاملاً بالترتيب: تنظي�
   python scripts/run_pipeline.py --skip-clean --yes   # البيانات النظيفة جاهزة في data_clean
 المجلدات الافتراضية: data_raw/ و data_clean/ و outputs/ (تُغيَّر بـ --raw --clean --out)
 """
-import argparse, csv, json, os, shutil, subprocess, sys, time
+import argparse, csv, json, os, re, shutil, subprocess, sys, time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -77,6 +77,9 @@ def main():
         elif not A.exists():
             print(f'ERROR: no entities file (*Associations*.xlsx) in {raw} and no clean copy in {clean}', file=sys.stderr); finish(2, out)
         rp = find(raw, '*أعداد مطلقة*.xlsx', '*opulation*.xlsx')
+        if not rp:   # ويندوز قد يُفسد الاسم العربي عند فك الضغط: نأخذ ملف Excel الوحيد المتبقي (لا نعدّل الملفات الخام)
+            rest = [x for x in sorted(raw.glob('*.xlsx')) if x not in (ra, rf) and not re.search(r'survey|2018|ssociation|oundation', x.name, re.I)]
+            rp = rest[0] if len(rest) == 1 else None
         if rp: run('Prepare population 2010-2022 (prepare_population)', [HERE / 'prepare_population.py', rp, clean]); shutil.move(str(clean / 'population_log.csv'), out / 'cleaning' / 'population_log.csv')
         rgv = find(raw, '*governorate*.csv')
         if rgv: run('Population by governorate (prepare_governorates)', [HERE / 'prepare_governorates.py', rgv, clean, '--regions', P]); shutil.move(str(clean / 'governorates_log.csv'), out / 'cleaning' / 'governorates_log.csv')
@@ -92,22 +95,20 @@ def main():
     if not a.yes:
         say('\n  STOPPED for human review. If you approve these decisions, run again with:  --yes'); finish(3, out)
     say('      -> approved (--yes)')
-    say('\n[3/3] Analysis and report')
+    say('\n[3/3] Analysis and dashboard')
 
     # ٣) التحليل والتقرير
     run('Gap analysis + decision matrix (run_analysis)', [HERE / 'run_analysis.py', '--assoc', A, '--pop', P, '--out', out, '--config', a.config] + (['--found', F] if F.exists() else []) + (['--demand', clean / 'survey2018_demand_clean.csv'] if (clean / 'survey2018_demand_clean.csv').exists() else []))
     PS = clean / 'population_series_clean.csv'
     if PS.exists(): run('2030 gap forecast (forecast_2030)', [HERE / 'forecast_2030.py', '--series', PS, '--tables', out / 'tables'])
-    cmd = [HERE / 'build_report.py', '--tables', out / 'tables', '--log', out / 'analysis_decisions_log.csv', '--out', out]
-    if (clean / 'survey2018_challenges_clean.csv').exists(): cmd += ['--challenges', clean / 'survey2018_challenges_clean.csv']
-    run('Interactive report (build_report)', cmd)
+    run('Dashboard (build_dashboard)', [HERE / 'build_dashboard.py', '--out', out])
     opt = {'Foundations (funders layer)': F, 'Survey 2018 (demand lens)': clean / 'survey2018_demand_clean.csv', 'Population series (2030 gap)': clean / 'population_series_clean.csv'}
     say('\nOptional inputs: ' + ' | '.join(f'{k}: {"yes" if v.exists() else "not provided"}' for k, v in opt.items()))
     import pandas as pd
     M = pd.read_csv(out / 'tables/decision_matrix.csv', encoding='utf-8-sig'); lb = cfg['labels']
     n = {k: int((M.recommendation == lb[k]).sum()) for k in ('priority', 'ok', 'high')}
     say(f'\nRESULT  cells: {len(M)} | priority support: {n["priority"]} | adequate: {n["ok"]} | high coverage: {n["high"]}')
-    say(f'DONE    open: {out / "report.html"}'); finish(0, out)
+    say(f'DONE    open: {out / "dashboard.html"}'); finish(0, out)
 
 
 if __name__ == '__main__':

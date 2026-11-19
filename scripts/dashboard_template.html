@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>داشبورد مُدرك</title>
+<style>
+/*FONTS*/
+:root{--bg:#140a18;--bg2:#1d0f23;--card:#24122b;--card2:#2c1634;--line:#3d2346;--tx:#f5ecf3;--mu:#bba5b8;--dim:#8d7690;
+--red:#ff6b5b;--red2:#d8473a;--gold:#ffc861;--green:#4fc28a;--blue:#6fa8ff;--ok:#4a3553}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:T,Tahoma,sans-serif;font-size:16px}
+body{background:radial-gradient(ellipse 80% 50% at 85% 0%,#3a1240 0%,rgba(20,10,24,0) 70%),radial-gradient(ellipse 60% 40% at 0% 100%,#3a0f1e 0%,rgba(20,10,24,0) 70%),var(--bg);min-height:100vh}
+a{color:inherit}
+header{position:sticky;top:0;z-index:20;background:rgba(20,10,24,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{max-width:1320px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.logo{font-size:28px;font-weight:800;letter-spacing:.5px}.logo span{color:var(--red)}
+.tag{color:var(--mu);font-size:14px}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin-inline-start:auto}
+nav button{font:inherit;font-size:15px;background:none;border:1px solid transparent;color:var(--mu);padding:7px 13px;border-radius:10px;cursor:pointer}
+nav button:hover{color:var(--tx);background:var(--card)}
+nav button.on{color:var(--tx);background:var(--card2);border-color:var(--line)}
+main{max-width:1320px;margin:0 auto;padding:22px 20px 60px}
+section{display:none}section.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-size:30px;margin:0 0 4px;font-weight:800}h2{font-size:22px;margin:0 0 6px;font-weight:800}h3{font-size:17px;margin:0 0 8px;font-weight:700}
+.sub{color:var(--mu);margin:0 0 18px;line-height:1.7}
+.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+.card{background:linear-gradient(165deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:18px}
+.kpi .v{font-size:38px;font-weight:800;line-height:1.1}.kpi .l{color:var(--mu);font-size:14px;margin-top:4px;line-height:1.6}
+.kpi .v small{font-size:16px;color:var(--mu);font-weight:500}
+.red{color:var(--red)}.gold{color:var(--gold)}.green{color:var(--green)}.mu{color:var(--mu)}
+.start{border-color:#7a2a3a;box-shadow:0 0 28px rgba(255,90,80,.12)}
+.start .rk{color:#ff9d90;font-weight:700;font-size:14px}.start .nm{font-size:20px;font-weight:800;margin:4px 0 8px}
+.big{font-size:44px;font-weight:800;color:var(--red);line-height:1}.big small{font-size:15px;color:var(--mu);font-weight:500}
+.checks{margin-top:12px;display:grid;gap:5px;font-size:14.5px;color:var(--green)}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin:16px 0}
+.duel{display:flex;align-items:stretch;gap:12px}.duel>div{flex:1;border-radius:14px;padding:14px;background:var(--bg2);border:1px solid var(--line);text-align:center}
+.duel .n{font-size:46px;font-weight:800;line-height:1}.duel .t{color:var(--mu);font-size:14px;margin-top:6px;line-height:1.6}
+.duel .win{border-color:var(--red);background:#2d1220}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:3px 10px;font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--bg2)}
+.b-ok{color:var(--green);border-color:#2c6b4e;background:#132a20}.b-gold{color:var(--gold);border-color:#7c6223;background:#2b2210}.b-red{color:var(--red);border-color:#7a2a3a;background:#2d1220}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.chip{font:inherit;font-size:14.5px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--mu);padding:7px 14px;border-radius:99px}
+.chip.on{color:var(--tx);border-color:var(--red);background:#341626}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-inline-end:4px}
+select,input[type=number]{font:inherit;background:var(--bg2);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:7px 10px}
+input[type=range]{accent-color:var(--red);width:220px}
+.btn{font:inherit;font-size:15px;font-weight:700;cursor:pointer;border-radius:11px;padding:9px 16px;border:1px solid var(--line);background:var(--card2);color:var(--tx)}
+.btn:hover{border-color:var(--mu)}.btn.pri{background:var(--red2);border-color:var(--red2)}.btn.pri:hover{background:var(--red)}
+.yearbox{display:flex;align-items:center;gap:8px;color:var(--mu);font-size:14px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{font:inherit;font-size:14px;background:var(--bg2);color:var(--mu);border:0;padding:6px 12px;cursor:pointer}
+.seg button.on{background:var(--red2);color:#fff}
+.tip{border-bottom:1px dotted var(--dim);cursor:help}
+#tt{position:fixed;z-index:50;pointer-events:none;background:#0e0711;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.7;max-width:320px;opacity:0;transition:opacity .12s;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+/* bars */
+.bars{position:relative}
+.brow{position:absolute;left:0;right:0;height:34px;display:flex;align-items:center;gap:10px;transition:top .9s cubic-bezier(.6,0,.2,1)}
+.brow .nm{width:128px;font-size:15px;text-align:left;flex:none}
+.brow .tr{flex:1;height:22px;position:relative}
+.brow .fl{position:absolute;right:0;top:0;bottom:0;border-radius:6px;background:var(--ok);transition:width .9s cubic-bezier(.6,0,.2,1),background .4s}
+.brow .vl{width:62px;font-weight:700;font-size:15px;flex:none}
+.brow .rk{width:30px;color:var(--dim);font-size:13px;flex:none;text-align:center}
+.brow.sel .nm{color:var(--red);font-weight:800}
+.natline{position:absolute;top:-6px;bottom:-6px;border-right:2px dashed var(--gold);transition:right .9s}
+.natlab{position:absolute;top:-24px;font-size:12px;color:var(--gold);transform:translateX(50%);white-space:nowrap;transition:right .9s}
+/* map */
+#map path{stroke:#140a18;stroke-width:1.2;cursor:pointer;transition:fill .5s,opacity .3s}
+#map path:hover{opacity:.85}#map path.sel{stroke:#fff;stroke-width:2.5}
+#map text{font-size:12px;fill:#fff;font-weight:700;pointer-events:none;paint-order:stroke;stroke:#140a18;stroke-width:3px}
+.legendbar{height:10px;border-radius:5px;background:linear-gradient(to left,#5b1a2a,#a33a3d,#e8664f,#f4a35c,#e9d27a,#7cc58f)}
+/* matrix */
+.mx{display:grid;gap:4px;overflow-x:auto}
+.mx .h{font-size:13px;font-weight:700;color:var(--mu);text-align:center;padding:6px 4px;line-height:1.35;display:flex;align-items:flex-end;justify-content:center}
+.mx .rh{font-size:14.5px;font-weight:700;display:flex;align-items:center;padding:0 6px}
+.mx .c{height:46px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;position:relative;cursor:default;transition:opacity .25s,transform .15s;border:2px solid transparent;text-align:center;line-height:1.2;padding:2px}
+.mx .c:hover{transform:scale(1.05);z-index:2}
+.s-priority{background:var(--red2);color:#fff}.s-ok{background:var(--ok);color:#e6d7e4}.s-high{background:#1f6b4c;color:#dff5ea}
+.mx .c.few{border:2px dashed #fff8}.mx .c.edge{border:2px solid var(--gold)}
+.mx .c.dim{opacity:.13}
+.mx .c .st{position:absolute;top:-7px;left:-5px;font-size:15px}
+.needi{color:var(--gold)}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{color:var(--mu);font-weight:700;text-align:right;padding:9px 8px;border-bottom:1px solid var(--line);background:var(--bg2)}
+td{padding:9px 8px;border-bottom:1px solid #2d1934}
+.arrow{color:var(--dim);margin:0 4px}
+.needlist{display:grid;gap:12px}
+.need{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.need .txt{font-size:18px;line-height:1.7}.need b{color:var(--red)}
+.note{color:var(--dim);font-size:13.5px;line-height:1.7;margin-top:10px}
+.kinds .k{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:14.5px}.kinds .k .t{width:210px}.kinds .k .b{height:14px;border-radius:4px;background:var(--red2)}
+ul.clean{margin:6px 0;padding-inline-start:20px;line-height:1.9}
+.summary{background:linear-gradient(90deg,#3a1428,#24122b);border:1px solid #7a2a3a;border-radius:14px;padding:12px 16px;margin:8px 0 18px;font-size:17px;line-height:1.8}
+.summary b{color:var(--red)}
+.start .checks{display:flex;gap:12px;flex-wrap:wrap}
+.duel2{display:flex;gap:12px}.duel2>div{flex:1;border-radius:14px;padding:16px;background:var(--bg2);border:1px solid var(--line)}
+.duel2 .hd{font-weight:800;font-size:18px;margin-bottom:6px}.duel2 .t{color:var(--mu);font-size:14.5px;line-height:1.7;min-height:48px}
+.duel2 .res{font-weight:800;font-size:20px;margin-top:10px;line-height:1.5}.duel2 .win{border-color:var(--red);background:#2d1220}.duel2 .win .res{color:var(--red)}
+footer{max-width:1320px;margin:0 auto;padding:0 20px 30px;color:var(--dim);font-size:13px}
+@media (max-width:980px){.g4{grid-template-columns:1fr 1fr}.g3,.g2,.hero{grid-template-columns:1fr}.brow .nm{width:96px}}
+@media (max-width:560px){.g4{grid-template-columns:1fr}nav{margin:0}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <div><div class="logo">مُدرك</div><div class="tag">نُدرك الفجوة، ونُحسن العطاء</div></div>
+  <nav id="nav">
+    <button data-t="home" class="on">الرئيسية</button><button data-t="regions">المناطق</button><button data-t="matrix">خريطة الأولويات</button>
+    <button data-t="sim">المحاكي</button><button data-t="y2030">2030</button><button data-t="need">وين الحاجة؟</button><button data-t="quality">المنهجية والجودة</button>
+  </nav>
+</div></header>
+<div id="tt"></div>
+<main>
+
+<!-- ============ الرئيسية ============ -->
+<section id="home" class="on">
+  <h1>أين يذهب العطاء الجديد؟</h1>
+  <h2 style="margin:22px 0 10px">وش لقى مُدرك؟</h2>
+  <div class="grid g4" id="kpis"></div>
+  <div class="hero">
+    <div class="card"><h2>⭐ التوصية: ابدأ بهذي الثلاث</h2><p class="sub" style="margin-bottom:12px">كل خانة فيها <span class="tip" data-tip="التوصية = تحتاج دعم + بيانات كافية + الحاجة للتخصص عالية أو متوسطة.">ثلاثة شروط معاً</span>.</p><div class="grid g3" id="startCards"></div></div>
+    <div class="card"><h2>لو انفتحت 100 جمعية جديدة… وين نحطها؟</h2><div class="duel2" id="duel"></div>
+      <div class="row" style="margin-top:14px;justify-content:space-between"><span id="stab"></span><button class="btn" onclick="go('sim')">جرّبها بنفسك ←</button></div></div>
+  </div>
+</section>
+
+<!-- ============ المناطق ============ -->
+<section id="regions">
+  <div class="row" style="justify-content:space-between"><div><h1>المناطق</h1><p class="sub">اضغط على أي منطقة في الخريطة أو القائمة لتفاصيلها.</p></div>
+  <div class="yearbox"><span class="tip" data-tip="اختبار الثبات: أعد الحساب بسكان سنة أخرى (2025 و2030 متوقعة) وشاهد هل يتغير القرار.">سنة السكان</span><div class="seg yrs"></div></div></div>
+  <div class="grid g2">
+    <div class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3 id="barsTitle">جمعيات لكل 100 ألف شخص</h3>
+      <div class="seg" id="mode"><button data-m="count">العدد</button><button data-m="rate" class="on">لكل 100 ألف شخص</button></div></div>
+      <p class="note" style="margin:0 0 4px">👆 اضغط «العدد» ثم «لكل 100 ألف شخص» وشوف وين تروح الشرقية.</p>
+      <div class="bars" id="bars" style="height:470px;margin-top:26px"></div></div>
+    <div class="card"><svg id="map" style="width:100%;height:auto"></svg>
+      <div class="row" style="gap:8px;font-size:13px;color:var(--mu)"><span>أقل تغطية</span><div class="legendbar" style="flex:1"></div><span>أعلى تغطية</span></div></div>
+  </div>
+  <div class="card" style="margin-top:16px" id="regDetail"></div>
+</section>
+
+<!-- ============ خريطة الأولويات ============ -->
+<section id="matrix">
+  <div class="row" style="justify-content:space-between"><div><h1>خريطة الأولويات</h1><p class="sub">كل منطقة × كل تخصص. اللون = التغطية مقارنة بمعدل المملكة للتخصص نفسه. مرّر المؤشر على أي خانة لتفاصيلها.</p></div>
+  <div class="yearbox"><span class="tip" data-tip="اختبار الثبات: غيّر سنة السكان وشاهد هل تتغير الخانات.">سنة السكان</span><div class="seg yrs"></div></div></div>
+  <div class="chips" id="mxChips"></div>
+  <div class="card"><div class="mx" id="mx"></div></div>
+  <div class="row" style="gap:18px;font-size:13.5px;color:var(--mu);margin-top:10px">
+    <span><span class="sw" style="border:2px dashed #fff8"></span><span class="tip" data-tip="عدد الجمعيات صغير جداً للحكم بثقة (أقل من 3 في المنطقة أو أقل من 30 في المملكة).">إطار متقطع = بيانات غير كافية</span></span>
+    <span><span class="needi">▲</span> <span class="tip" data-tip="الحاجة = حصة التخصص من المستفيدين ÷ حصته من المنشآت (مسح المنشآت غير الربحية 2018، على مستوى المملكة).">حاجة عالية للتخصص</span></span>
+  </div>
+  <p class="note" id="mxCount"></p>
+</section>
+
+<!-- ============ المحاكي ============ -->
+<section id="sim">
+  <h1>المحاكي: وزّع بنفسك… أو دع مُدرك يقترح</h1>
+  <p class="sub">مُدرك يقترح، والإنسان يقرّر. أضف جمعيات جديدة وشاهد كيف تتغير الخريطة، أو اطلب اقتراح مُدرك وقارنه بالتوزيع المعتاد.</p>
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <div class="row"><span>عدد الجمعيات الجديدة</span><input type="range" id="nR" min="10" max="1000" step="2" value="100" style="width:280px"><b id="nV" style="font-size:22px">100</b></div>
+      <div class="seg" id="simTabs"><button data-s="me" class="on">وزّع بنفسك</button><button data-s="mud">اقتراح مُدرك ⭐</button><button data-s="usual">التوزيع المعتاد</button></div>
+    </div>
+    <div id="meBox" class="row" style="margin-top:14px"><select id="sR"></select><select id="sG"></select><input type="number" id="sN" value="10" min="1" max="300" style="width:80px"><button class="btn pri" id="sAdd">أضف</button><button class="btn" id="sReset">صفّر</button><span id="left" class="badge"></span></div>
+    <p class="note" id="tabNote"></p>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>من 7 خانات تحتاج دعم… كم خانة انحلّت؟</h3><div class="duel" id="cmp"></div><p class="note" id="cmpNote"></p><div class="row" id="seven" style="margin-top:6px"></div></div>
+  <div class="card" style="margin-top:16px"><div class="row" style="justify-content:space-between"><h3 id="allocTitle"></h3><div id="allocKpi" class="row"></div></div><div id="alloc"></div></div>
+</section>
+
+<!-- ============ 2030 ============ -->
+<section id="y2030">
+  <h1>ماذا عن 2030؟</h1>
+  <p class="sub">سيناريو: ماذا لو بقي عدد الجمعيات كما هو، ونما السكان بنفس وتيرتهم؟</p>
+  <div class="grid g3" id="f30k"></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>جمعيات ناقصة لبلوغ معدل المملكة: اليوم مقابل 2030</h3><div id="f30bars"></div></div>
+    <div class="card"><h3>كيف اخترنا طريقة التوقع؟</h3><p class="sub">اختبرنا التوقع على الماضي: توقّعنا سكان 2022 من بيانات 2010–2018 وقارنّا بالواقع.</p><div class="duel" id="bt"></div>
+      <p class="note">التوقع بالغ قليلاً في الاختبار (+4.39%)، لذلك أرقام 2030 أقرب إلى حدٍّ أعلى. هذا سيناريو للتخطيط… وليس قدراً.</p></div>
+  </div>
+</section>
+
+<!-- ============ وين الحاجة ============ -->
+<section id="need">
+  <h1>وين الحاجة؟</h1>
+  <p class="sub">للمتبرع والمانح: اختر منطقتك، واضغط «شارك» لترسل الحاجة لمن يقدر يتصرف.</p>
+  <div class="row" style="margin-bottom:16px"><button class="btn pri" id="dlCsv">⬇ تحميل بطاقات الفجوة (CSV)</button><button class="btn" id="dlJson">⬇ (JSON) للمطورين والجهات</button></div>
+  <div class="chips" id="needRegs"></div>
+  <div class="needlist" id="needList"></div>
+  <div class="card" style="margin-top:16px"><h3>بطاقة الفجوة: كيف تستفيد منها الجهات؟</h3>
+    <table><tr><th>الجهة</th><th>الاستخدام المقترح</th></tr>
+    <tr><td>المركز الوطني لتنمية القطاع غير الربحي</td><td>توجيه تراخيص الجمعيات الجديدة نحو خانات «تحتاج دعم».</td></tr>
+    <tr><td>منصة إحسان</td><td>إبراز فرص التبرع في المناطق والتخصصات الأقل تغطية.</td></tr>
+    <tr><td>المتبرعون والمؤسسات المانحة</td><td>معرفة أين الحاجة قبل العطاء.</td></tr>
+    <tr><td>الجمعيات</td><td>فتح فروع أو شراكات في مناطق الفجوة.</td></tr></table>
+    <p class="note">بطاقة الفجوة ملف بصيغة موحدة يُعاد إنتاجه مع كل تشغيل لمُدرك. مُدرك جاهز للربط مع هذه الجهات، وليس مربوطاً بها تقنياً.</p></div>
+</section>
+
+<!-- ============ جودة البيانات ============ -->
+<section id="quality">
+  <h1>المنهجية وجودة البيانات: لماذا نثق بالأرقام؟</h1>
+  <p class="sub">كيف حسبنا، ومن أين البيانات، وكيف نظّفناها، وهل القرار ثابت.</p>
+  <div class="grid g4" id="qk"></div>
+  <div class="card" style="margin-top:16px"><h3>كيف حسبنا؟</h3><table id="rulesT"></table></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>ماذا صحّحنا في ملف الجمعيات؟</h3><div class="kinds" id="kinds"></div>
+      <p class="note">القيم المفقودة كُتبت «غير محدد» ولم تُخمَّن. القيم «المستنتجة» استُنتجت بقاعدة موثّقة من التصنيف الأعلى حين تتفق السجلات المماثلة بنسبة عالية، وكل تعديل مسجّل في سجل التنظيف. الملف الخام لم يُعدَّل.</p></div>
+    <div class="card"><h3>اختبار الثبات: هل يتغير القرار لو تغيّرت سنة السكان؟</h3><div id="stabT"></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>المصادر</h3><ul class="clean">
+      <li>منصة البيانات المفتوحة (open.data.gov.sa): الجمعيات الأهلية والمؤسسات الأهلية.</li>
+      <li>الهيئة العامة للإحصاء: السكان حسب المنطقة 2010–2022، تعداد 2022، مسح المنشآت غير الربحية 2018.</li>
+      <li>الخريطة: Natural Earth (ملكية عامة). الخط: Tajawal (رخصة OFL).</li></ul></div>
+    <div class="card"><h3>حدود معلنة</h3><ul class="clean">
+      <li>مُدرك يعدّ الجمعيات ولا يقيس أثرها أو حجمها.</li>
+      <li>الحاجة للتخصص محسوبة على مستوى المملكة؛ مسح 2018 لا ينزل للمناطق.</li>
+      <li id="exclLi"></li>
+      <li>معدل المملكة في المحاكي ثابت عند قيمته الحالية.</li></ul></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>الإفصاح عن الأدوات</h3><p class="sub" style="margin:0">التحليل بلغة Python (pandas). وكيل مُدرك مبني على Claude بملف مهارة وسكربتات المشروع: يقترح وينفّذ، ويتوقف عند القرارات لموافقة الإنسان. هذا الداشبورد يُبنى آلياً من جداول التحليل بسكربت build_dashboard.py.</p></div>
+</section>
+</main>
+<footer id="foot"></footer>
+
+<script>
+const D=/*DATA*/null;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=(n,d=0)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const ST={priority:'تحتاج دعم',ok:'قريبة من المعدل',high:'مكتفية'};
+const SHORT={'الدعوة والتعليم الديني وضيوف الرحمن':'الدعوة والتعليم الديني','التأييد والمؤازرة':'التأييد والمؤازرة'};
+const sg=g=>SHORT[g]||g;
+let YEAR='2022';
+const KEY=(r,g)=>r+'|'+g;
+const BASE={};D.cells.forEach(c=>BASE[KEY(c.r,c.g)]=c);
+
+/* ---------- core compute ---------- */
+function compute(year,add,natFrom){
+  add=add||{};
+  const pop=r=>D.pops[r][year];
+  const cnt=c=>c.a+(add[KEY(c.r,c.g)]||0);
+  let nat={};
+  if(natFrom){nat=natFrom}else{D.groups.forEach(g=>{let a=0,p=0;D.cells.filter(c=>c.g===g).forEach(c=>{a+=c.a;p+=pop(c.r)});nat[g]=a/p*1e5})}
+  const cells=D.cells.map(c=>{const a=cnt(c),p=pop(c.r),rate=a/p*1e5,idx=rate/nat[c.g];const r2=Math.round(idx*100)/100;
+    const st=r2<0.5?'priority':(r2>=1.5?'high':'ok');const need=D.need[c.g];
+    return {...c,a,p,rate,idx,st,miss:Math.max(0,nat[c.g]*p/1e5-a),start:st==='priority'&&!c.few&&need!=='أقل',edge:st==='ok'&&idx<0.55}});
+  const reg={};D.regions.forEach(r=>{const cs=cells.filter(c=>c.r===r);const a=cs.reduce((s,c)=>s+c.a,0);reg[r]={a,p:pop(r),rate:a/pop(r)*1e5}});
+  const tot=Object.values(reg).reduce((s,x)=>s+x.a,0),tp=Object.values(reg).reduce((s,x)=>s+x.p,0);
+  const order=Object.keys(reg).sort((x,y)=>reg[y].rate-reg[x].rate);order.forEach((r,i)=>reg[r].rank=i+1);
+  return {cells,reg,nat,kingdom:tot/tp*1e5,tot};
+}
+const C22=compute('2022');
+const NAT22=C22.nat;
+
+/* ---------- tooltip ---------- */
+const tt=$('#tt');
+document.addEventListener('mousemove',e=>{const t=e.target.closest('[data-tip]');if(!t){tt.style.opacity=0;return}
+  tt.innerHTML=t.dataset.tip;tt.style.opacity=1;const w=tt.offsetWidth,h=tt.offsetHeight;
+  let x=e.clientX-w-14;if(x<8)x=e.clientX+14;let y=e.clientY+16;if(y+h>innerHeight-8)y=e.clientY-h-12;tt.style.left=x+'px';tt.style.top=y+'px'});
+
+/* ---------- nav ---------- */
+function go(t){$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));$$('section').forEach(s=>s.classList.toggle('on',s.id===t));scrollTo({top:0});
+  if(t==='regions')setTimeout(drawBars,30)}
+$$('nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));
+
+/* ---------- year selectors ---------- */
+$$('.yrs').forEach(s=>{['2022','2025','2030'].forEach(y=>{const b=document.createElement('button');b.textContent=y;b.dataset.y=y;if(y===YEAR)b.classList.add('on');
+  b.onclick=()=>{YEAR=y;$$('.yrs button').forEach(x=>x.classList.toggle('on',x.dataset.y===y));drawRegions();drawMatrix()};s.appendChild(b)})});
+
+/* ---------- home ---------- */
+function home(){
+  const e=C22.reg['الشرقية'];const miss=D.f30.reduce((s,x)=>s+x.today,0),m30=D.f30.reduce((s,x)=>s+x.y30,0);
+  const st=C22.cells.filter(c=>c.start).sort((a,b)=>b.miss-a.miss);const r=race(100);
+    $('#kpis').innerHTML=[
+    [fmt(D.registered),'جمعية حللناها في كل مناطق المملكة'],
+    [fmt(C22.kingdom,2),'جمعية لكل 100 ألف شخص: هذا معدل المملكة'],
+    [`<span class="red">${fmt(e.rate,2)}</span>`,`الشرقية: أقل منطقة، نص معدل المملكة تقريباً`],
+    [`<bdi>${fmt(miss)}</bdi>`,`جمعية ناقصة عشان كل المناطق توصل للمعدل (<bdi>${fmt(m30)}</bdi> في 2030)`]
+  ].map(k=>`<div class="card kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div></div>`).join('');
+  $('#startCards').innerHTML=st.map((c,i)=>`<div class="card start"><div class="rk">#${i+1}</div><div class="nm">${c.r} · ${sg(c.g)}</div>
+    <div class="big">${fmt(c.miss)} <small>جمعية ناقصة</small></div>
+    <div class="checks"><div data-tip="التغطية ${Math.round(c.idx*100)}% من معدل المملكة">✓ نقص</div><div data-tip="${c.a} جمعية حالياً">✓ بيانات كافية</div><div data-tip="الحاجة للتخصص: ${D.need[c.g]}">✓ حاجة</div></div></div>`).join('');
+  $('#duel').innerHTML=`<div><div class="hd">بالطريقة المعتادة</div><div class="t">تنتشر في كل المناطق بنفس النسب الحالية</div><div class="res mu">ولا فجوة وحدة تنسد</div></div>
+    <div class="win"><div class="hd">بتوصية مُدرك ⭐</div><div class="t">تروح للأماكن الأقل تغطية أول</div><div class="res">الفجوات الـ${r.pri0} كلها تنسد بـ${r.need} جمعية بس</div></div>`;
+  const s=stability();$('#stab').innerHTML=s.same?`<span class="badge b-ok" data-tip="أعدنا الحساب بسكان 2025 و2030: الشرقية الأخيرة، وخانات التوصية نفسها، و${s.core} من ${s.base} خانات «تحتاج دعم» تبقى.">✓ القرار ثابت لو تغيّرت سنة السكان</span>`:`<span class="badge b-gold">⚠ القرار يتغير بتغير السنة</span>`;
+}
+
+/* ---------- simulation engines ---------- */
+function usual(N){const tot=D.cells.reduce((s,c)=>s+c.a,0);const raw=D.cells.map(c=>N*c.a/tot);const fl=raw.map(Math.floor);let rem=N-fl.reduce((a,b)=>a+b,0);
+  raw.map((v,i)=>[v-fl[i],i]).sort((a,b)=>b[0]-a[0]).slice(0,rem).forEach(([,i])=>fl[i]++);const add={};D.cells.forEach((c,i)=>{if(fl[i])add[KEY(c.r,c.g)]=fl[i]});return add}
+function mudrik(N){const add={};let need=null;
+  for(let k=0;k<N;k++){const S=compute('2022',add,NAT22).cells;const pri=S.filter(c=>!c.few&&c.st==='priority');
+    let t;if(pri.length){t=pri.reduce((m,c)=>c.idx<m.idx?c:m)}else{if(need===null)need=k;t=S.filter(c=>!c.few).reduce((m,c)=>c.miss>m.miss?c:m)}
+    const kk=KEY(t.r,t.g);add[kk]=(add[kk]||0)+1}
+  return {add,need}}
+function liftNeed(){const add={};let k=0;while(k<2000){const S=compute('2022',add,NAT22).cells;const pri=S.filter(c=>!c.few&&c.st==='priority');if(!pri.length)return k;
+  const t=pri.reduce((m,c)=>c.idx<m.idx?c:m);const kk=KEY(t.r,t.g);add[kk]=(add[kk]||0)+1;k++}return k}
+const NEED_ALL=liftNeed();
+function prisConf(add){return compute('2022',add,NAT22).cells.filter(c=>!c.few&&c.st==='priority').length}
+function race(N){const pri0=prisConf({});const u=usual(N),m=mudrik(N).add;return {pri0,usualLift:pri0-prisConf(u),mudLift:pri0-prisConf(m),need:NEED_ALL,u,m}}
+function stability(){const Y=['2022','2025','2030'];const C=Y.map(y=>compute(y));
+  const pri=C.map(c=>new Set(c.cells.filter(x=>x.st==='priority'&&!x.few).map(x=>KEY(x.r,x.g))));
+  const st=C.map(c=>c.cells.filter(x=>x.start).map(x=>KEY(x.r,x.g)).sort().join(','));
+  const core=[...pri[0]].filter(k=>pri.every(s=>s.has(k)));
+  const changes=Y.slice(1).map((y,i)=>({y,inn:[...pri[i+1]].filter(k=>!pri[0].has(k)),out:[...pri[0]].filter(k=>!pri[i+1].has(k))}));
+  const east=Y.map((y,i)=>({y,rate:C[i].reg['الشرقية'].rate,rank:C[i].reg['الشرقية'].rank,n:pri[i].size}));
+  const eastLast=east.every(e=>e.rank===13),startSame=st.every(x=>x===st[0]);
+  return {same:eastLast&&startSame,eastLast,startSame,core:core.length,base:pri[0].size,changes,east}}
+/* ---------- regions ---------- */
+let MODE='rate',SEL='الشرقية';
+$$('#mode button').forEach(b=>b.onclick=()=>{MODE=b.dataset.m;$$('#mode button').forEach(x=>x.classList.toggle('on',x===b));drawBars()});
+function colorFor(rate,k){const t=Math.max(0,Math.min(1,(rate/k)/2.4));const stops=['#5b1a2a','#a33a3d','#e8664f','#f4a35c','#e9d27a','#7cc58f'];
+  const f=t*(stops.length-1),i=Math.min(stops.length-2,Math.floor(f)),u=f-i;const h=s=>[1,3,5].map(j=>parseInt(s.substr(j,2),16));const a=h(stops[i]),b=h(stops[i+1]);
+  return `rgb(${a.map((v,j)=>Math.round(v+(b[j]-v)*u)).join(',')})`}
+function drawRegions(){drawBars();drawMap();drawDetail()}
+function drawBars(){const C=compute(YEAR);const el=$('#bars');const val=r=>MODE==='rate'?C.reg[r].rate:C.reg[r].a;
+  const order=[...D.regions].sort((a,b)=>val(b)-val(a));const mx=Math.max(...order.map(val));
+  $('#barsTitle').textContent=MODE==='rate'?`كم جمعية لكل 100,000 شخص؟ (سكان ${YEAR})`:'عدد الجمعيات';
+  if(!el.children.length){D.regions.forEach(r=>{const d=document.createElement('div');d.className='brow';d.dataset.r=r;d.innerHTML=`<span class="rk"></span><span class="nm">${r}</span><span class="tr"><span class="fl"></span></span><span class="vl"></span>`;
+    d.style.cursor='pointer';d.onclick=()=>{SEL=r;drawRegions()};el.appendChild(d)});el.insertAdjacentHTML('beforeend','<div class="natline"></div><div class="natlab"></div>')}
+  order.forEach((r,i)=>{const d=el.querySelector(`[data-r="${r}"]`);d.style.top=(i*36)+'px';d.classList.toggle('sel',r===SEL);
+    d.querySelector('.rk').textContent=i+1;d.querySelector('.vl').textContent=MODE==='rate'?fmt(val(r),2):fmt(val(r));d.dataset.tip=MODE==='rate'?`<b>${r}</b><br>${fmt(val(r),2)} جمعية لكل 100,000 شخص`:`<b>${r}</b><br>${fmt(val(r))} جمعية`;
+    const f=d.querySelector('.fl');f.style.width=(val(r)/mx*100)+'%';f.style.background=MODE==='rate'?colorFor(C.reg[r].rate,C.kingdom):(r===SEL?'var(--red2)':'#6b4a78')});
+  const nl=el.querySelector('.natline'),nb=el.querySelector('.natlab');
+  if(MODE==='rate'){const tr=el.querySelector('.tr');const w=tr.offsetWidth,off=el.offsetWidth-tr.offsetLeft-w;const x=off+(C.kingdom/mx)*w;nl.style.display=nb.style.display='block';nl.style.right=x+'px';nb.style.right=x+'px';nb.textContent='معدل المملكة '+fmt(C.kingdom,2)}
+  else{nl.style.display=nb.style.display='none'}}
+function drawMap(){const C=compute(YEAR);const M=D.map,svg=$('#map');svg.setAttribute('viewBox',`0 0 ${M.w} ${M.h}`);
+  svg.innerHTML=Object.entries(M.regions).map(([r,v])=>`<path d="${v.d}" data-r="${r}" fill="${colorFor(C.reg[r].rate,C.kingdom)}" class="${r===SEL?'sel':''}" data-tip="<b>${r}</b><br>${fmt(C.reg[r].rate,2)} جمعية لكل 100 ألف شخص<br>المرتبة ${C.reg[r].rank} من 13"></path>`).join('')+
+  Object.entries(M.regions).map(([r,v])=>`<text x="${v.cx}" y="${v.cy}" text-anchor="middle">${fmt(C.reg[r].rate,1)}</text>`).join('');
+  svg.querySelectorAll('path').forEach(p=>p.onclick=()=>{SEL=p.dataset.r;drawRegions()})}
+function drawDetail(){const C=compute(YEAR);const x=C.reg[SEL];const f=D.f30.find(z=>z.r===SEL);const cs=C.cells.filter(c=>c.r===SEL).sort((a,b)=>a.idx-b.idx);
+  $('#regDetail').innerHTML=`<div class="row" style="justify-content:space-between"><h2>${SEL}</h2><span class="mu">سكان ${YEAR}: ${fmt(x.p)}</span></div>
+  <div class="grid g4" style="margin:12px 0">${[[fmt(x.rate,2),'جمعية لكل 100 ألف شخص'],[`${x.rank} / 13`,'الترتيب'],[fmt(x.a),'جمعية'],[`<bdi>${fmt(f.today)}</bdi> ← <bdi>${fmt(f.y30)}</bdi>`,'جمعيات ناقصة: اليوم ← 2030']].map(k=>`<div class="kpi"><div class="v" style="font-size:28px">${k[0]}</div><div class="l">${k[1]}</div></div>`).join('')}</div>
+  ${(()=>{const need=cs.filter(c=>c.st==='priority'||c.edge),rest=cs.length-need.length,hi=cs.filter(c=>c.st==='high').length;
+    return `<h3 style="margin-top:6px">${need.length?'التخصصات اللي تحتاج انتباه':'لا توجد تخصصات تحتاج دعم'}</h3><div class="row">${need.map(c=>`<span class="badge ${c.st==='priority'?'b-red':'b-gold'}" data-tip="${c.a} جمعية · التغطية ${Math.round(c.idx*100)}% من معدل المملكة">${c.start?'⭐ ':''}${sg(c.g)}: ${c.edge?'على الحافة':ST[c.st]}${c.few?' (بيانات غير كافية)':''}</span>`).join('')}</div>
+    <p class="note">باقي التخصصات (${rest}): ${hi?hi+' مكتفية، و':''}${rest-hi} قريبة من المعدل.</p>`})()}`}
+
+/* ---------- matrix ---------- */
+let MXF='all';
+const FILT=[['all','الكل','',''],['start','⭐ التوصية','','تحتاج دعم + بيانات كافية + الحاجة للتخصص عالية أو متوسطة.'],
+  ['priority','تحتاج دعم','background:var(--red2)','الجمعيات أقل من نصف معدل المملكة للتخصص.'],
+  ['ok','قريبة من المعدل','background:var(--ok)','بين نصف المعدل ومرة ونصف.'],
+  ['high','مكتفية','background:#1f6b4c','أكثر من مرة ونصف من المعدل.'],
+  ['edge','على الحافة','border:2px solid var(--gold)','قريبة من المعدل لكن تغطيتها أقل من 55%: قريبة جداً من «تحتاج دعم».']];
+$('#mxChips').innerHTML=FILT.map(([k,l,s,t])=>`<button class="chip ${k===MXF?'on':''}" data-f="${k}"${t?` data-tip="${t}"`:''}>${s?`<span class="sw" style="${s}"></span>`:''}${l}</button>`).join('');
+$$('#mxChips .chip').forEach(b=>b.onclick=()=>{MXF=b.dataset.f;$$('#mxChips .chip').forEach(x=>x.classList.toggle('on',x===b));drawMatrix()});
+function drawMatrix(){const C=compute(YEAR);const el=$('#mx');el.style.gridTemplateColumns=`120px repeat(${D.groups.length},minmax(84px,1fr))`;
+  let h='<div></div>'+D.groups.map(g=>`<div class="h" data-tip="الحاجة للتخصص: ${D.need[g]} (${fmt(D.needRatio[g],2)})">${sg(g)}${D.need[g]==='عالية'?' <span class="needi">▲</span>':''}</div>`).join('');
+  const regs=[...D.regions].sort((a,b)=>C.reg[a].rate-C.reg[b].rate);
+  regs.forEach(r=>{h+=`<div class="rh">${r}</div>`;D.groups.forEach(g=>{const c=C.cells.find(x=>x.r===r&&x.g===g);
+    const show=MXF==='all'||(MXF==='start'?c.start:MXF==='edge'?c.edge:c.st===MXF);
+    h+=`<div class="c s-${c.st} ${c.few?'few':''} ${c.edge?'edge':''} ${show?'':'dim'}" data-tip="<b>${r} · ${g}</b><br>${c.a} جمعية · ${fmt(c.rate,2)} لكل 100 ألف شخص<br>التغطية ${Math.round(c.idx*100)}% من معدل المملكة (${fmt(C.nat[g],2)})<br>${c.miss>0.05?'ناقصة: '+fmt(c.miss,1)+' جمعية<br>':''}<b>${c.start?'⭐ التوصية':c.edge?'على الحافة':ST[c.st]}</b>${c.few?'<br>⚠ بيانات غير كافية':''}">${c.start?'<span class="st">⭐</span>':''}${ST[c.st]}</div>`})});
+  el.innerHTML=h;const n=k=>C.cells.filter(c=>c.st===k).length;
+  $('#mxCount').innerHTML=`سكان ${YEAR}: تحتاج دعم ${n('priority')} (منها ${C.cells.filter(c=>c.st==='priority'&&c.few).length} ببيانات غير كافية) · قريبة من المعدل ${n('ok')} · مكتفية ${n('high')} · التوصية ${C.cells.filter(c=>c.start).length} · المناطق مرتبة من الأقل تغطية.`}
+
+/* ---------- simulator ---------- */
+/* ثلاث خطط منفصلة: توزيعك (MY) لا يختلط أبداً باقتراح مُدرك أو بالتوزيع المعتاد */
+let MY={},TAB='me';
+const sR=$('#sR'),sG=$('#sG');sR.innerHTML=D.regions.map(r=>`<option ${r==='الشرقية'?'selected':''}>${r}</option>`).join('');sG.innerHTML=D.groups.map(g=>`<option value="${g}">${sg(g)}</option>`).join('');
+const NN=()=>+$('#nR').value, used=()=>Object.values(MY).reduce((a,b)=>a+b,0);
+const PLAN=()=>TAB==='me'?MY:TAB==='mud'?mudrik(NN()).add:usual(NN());
+const TABNOTE={me:'وزّع الجمعيات الجديدة بنفسك على أي منطقة وتخصص… وشوف هل تقدر تتفوق على مُدرك.',
+  mud:'مُدرك يعطي كل جمعية للخانة الأقل تغطية أولاً، وبعد ما تنسد كلها يعطي الباقي للخانة الأكثر نقصاً.',
+  usual:'الجمعيات الجديدة تنفتح بنفس نِسب الجمعيات الحالية، يعني الكثير يزيد كثيراً.'};
+$$('#simTabs button').forEach(b=>b.onclick=()=>{TAB=b.dataset.s;$$('#simTabs button').forEach(x=>x.classList.toggle('on',x===b));drawSim()});
+$('#nR').oninput=e=>{$('#nV').textContent=e.target.value;drawSim()};
+$('#sAdd').onclick=()=>{const k=KEY(sR.value,sG.value),n=Math.min(Math.max(1,+$('#sN').value||0),NN()-used());if(n>0){MY[k]=(MY[k]||0)+n}drawSim()};
+$('#sReset').onclick=()=>{MY={};drawSim()};
+function drawSim(){$('#meBox').style.display=TAB==='me'?'flex':'none';$('#tabNote').textContent=TABNOTE[TAB];
+  const left=NN()-used();$('#left').innerHTML=left>=0?`باقي لك: <b>${fmt(left)}</b> من ${fmt(NN())}`:`تجاوزت العدد بـ${fmt(-left)}`;$('#sAdd').disabled=left<=0;drawCmp();drawAlloc()}
+function drawCmp(){const N=NN();const r=race(N);const meLift=r.pri0-prisConf(MY),u=used();
+  const best=Math.max(r.usualLift,r.mudLift,u?meLift:-1);
+  const box=(v,lab,cls)=>`<div class="${v===best&&v>0?'win':''}">${v===best&&v>0?'<span class="badge b-red" style="margin-bottom:6px">الأفضل</span>':''}<div class="n ${cls}">${v<0?'–':v+' <span style="font-size:24px">من</span> '+r.pri0}</div><div class="t">${lab}</div></div>`;
+  $('#cmp').innerHTML=box(r.usualLift,'التوزيع المعتاد','mu')+box(u?meLift:-1,'توزيعك'+(u?` (${fmt(u)} جمعية)`:' · لم توزّع بعد'),'')+box(r.mudLift,'اقتراح مُدرك ⭐','red');
+  const hl=`<b style="color:var(--tx);font-size:17px">بـ${fmt(N)} جمعية: التوزيع المعتاد حلّ ${r.usualLift} من ${r.pri0}… ومُدرك حلّها كلها بـ${r.need} جمعية فقط.</b>`;
+  $('#cmpNote').innerHTML=(N>=r.need?hl:`<b style="color:var(--tx);font-size:17px">مُدرك يحتاج ${r.need} جمعية ليحلّ السبع كلها، جرّب ترفع العدد.</b>`)+`<br>«تنحل» = تطلع من «تحتاج دعم» وتوصل نصف معدل المملكة أو أكثر.`;
+  const A=compute('2022',PLAN(),NAT22).cells,B=compute('2022',{},NAT22).cells.filter(c=>c.st==='priority'&&!c.few).sort((a,b)=>a.idx-b.idx);
+  const lab={me:'توزيعك',mud:'اقتراح مُدرك',usual:'التوزيع المعتاد'}[TAB];
+  $('#seven').innerHTML=`<span class="mu" style="font-size:13.5px">الخانات السبع (${lab}):</span>`+B.map(c=>{const ok=A.find(x=>x.r===c.r&&x.g===c.g).st!=='priority';
+    return `<span class="badge ${ok?'b-ok':'b-red'}">${ok?'✓ ':''}${c.r} · ${sg(c.g)}</span>`}).join('')}
+function drawAlloc(){const ADD=PLAN();const B=compute('2022',{},NAT22),A=compute('2022',ADD,NAT22);const tot=Object.values(ADD).reduce((a,b)=>a+b,0);
+  $('#allocTitle').textContent={me:'توزيعك',mud:'اقتراح مُدرك',usual:'التوزيع المعتاد'}[TAB]+(tot?` · ${fmt(tot)} جمعية`:'');
+  const pb=B.cells.filter(c=>c.st==='priority'&&!c.few).length,pa=A.cells.filter(c=>c.st==='priority'&&!c.few).length;
+  $('#allocKpi').innerHTML=`<span class="badge b-red">تحتاج دعم: <bdi>${pb}</bdi> ← <bdi>${pa}</bdi></span><span class="badge">الشرقية: <bdi>${fmt(B.reg['الشرقية'].rate,2)}</bdi> ← <bdi>${fmt(A.reg['الشرقية'].rate,2)}</bdi></span>`;
+  const rows=Object.entries(ADD).filter(([,n])=>n>0).map(([k,n])=>{const b=B.cells.find(c=>KEY(c.r,c.g)===k),a=A.cells.find(c=>KEY(c.r,c.g)===k);return {b,a,n}}).sort((x,y)=>y.n-x.n);
+  $('#alloc').innerHTML=rows.length?`<table><tr><th>الخانة</th><th>أُضيف</th><th>التغطية</th><th>الحالة</th><th>باقٍ للمعدل</th></tr>${rows.slice(0,12).map(({b,a,n})=>`<tr><td>${b.r} · ${sg(b.g)}${b.few?' <span class="mu">(بيانات غير كافية)</span>':''}</td><td><b>+${n}</b></td><td><bdi>${Math.round(b.idx*100)}%</bdi><span class="arrow">←</span><b><bdi>${Math.round(a.idx*100)}%</bdi></b></td><td>${ST[b.st]}<span class="arrow">←</span><b class="${a.st!==b.st?'green':''}">${ST[a.st]}${a.st!==b.st?' ✓':''}</b></td><td>${a.miss>0.05?fmt(a.miss,1):'✓ بلغت المعدل'}</td></tr>`).join('')}</table>${rows.length>12?`<p class="note">و${rows.length-12} خانة أخرى بأعداد أقل.</p>`:''}`:'<p class="mu">اختر منطقة وتخصصاً واضغط «أضف».</p>'}
+
+/* ---------- 2030 ---------- */
+function y2030(){const p22=Object.values(D.pops).reduce((s,x)=>s+x['2022'],0);const m=D.f30.reduce((s,x)=>s+x.today,0),m30=D.f30.reduce((s,x)=>s+x.y30,0);
+  $('#f30k').innerHTML=[[`<bdi>${fmt(p22/1e6,1)}M</bdi> ← <bdi>${fmt(D.kpop30/1e6,1)}M</bdi>`,'سكان المملكة: 2022 ← 2030'],[`<bdi>${fmt(m)}</bdi> ← <bdi class="red">${fmt(m30)}</bdi>`,'جمعيات ناقصة لبلوغ معدل المملكة'],[`${fmt(100-D.backtest['نمو سنوي مركّب (CAGR)'],1)}%`,'دقة طريقة التوقع المختارة']].map(k=>`<div class="card kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div></div>`).join('');
+  const f=[...D.f30].sort((a,b)=>b.y30-a.y30).filter(x=>x.y30>=1);const mx=Math.max(...f.map(x=>x.y30));
+  $('#f30bars').innerHTML=`<div class="row" style="gap:8px;flex-wrap:nowrap;font-size:13px;color:var(--mu)"><span style="width:118px"></span><span style="flex:1"></span><span style="width:110px;text-align:right"><b style="color:var(--tx)">اليوم</b> ← 2030</span></div>`+f.map(x=>`<div class="row" style="gap:8px;margin:7px 0;flex-wrap:nowrap"><span style="width:118px;text-align:left;font-size:14.5px">${x.r}</span><div style="flex:1;position:relative;height:24px">
+    <div style="position:absolute;right:0;top:0;height:24px;width:${x.y30/mx*100}%;background:#5b2638;border-radius:5px"></div><div style="position:absolute;right:0;top:5px;height:14px;width:${x.today/mx*100}%;background:var(--red2);border-radius:4px"></div></div>
+    <span style="width:110px;font-size:14px;text-align:right"><b><bdi>${fmt(x.today)}</bdi></b> <span class="mu">← <bdi>${fmt(x.y30)}</bdi></span></span></div>`).join('')+`<p class="note"><span class="sw" style="background:var(--red2)"></span>اليوم <span class="sw" style="background:#5b2638;margin-inline-start:12px"></span>2030</p>`;
+  const bt=D.backtest;const k=Object.keys(bt);const best=k.reduce((a,b)=>bt[a]<bt[b]?a:b);
+  $('#bt').innerHTML=k.map(n=>`<div class="${n===best?'win':''}"><div class="n ${n===best?'red':'mu'}">${fmt(bt[n],2)}%</div><div class="t">${n.replace('(CAGR)','').trim()}<br>متوسط الخطأ${n===best?' · ✓ اعتمدناها':''}</div></div>`).join('')}
+
+/* ---------- need ---------- */
+let NREG='الكل';
+function needText(c){const t=`${c.r} تحتاج ${plural(Math.round(c.miss)).replace(/<[^>]+>/g,'')} إضافية في ${c.g} (التغطية ${Math.round(c.idx*100)}% من معدل المملكة)`;
+  return (c.edge?`${c.r} على الحافة في ${c.g} (التغطية ${Math.round(c.idx*100)}% من معدل المملكة)`:t)+(c.few?' · بيانات محدودة':'')+'.\nالمصدر: مُدرك، من بيانات منصة البيانات المفتوحة والهيئة العامة للإحصاء.'}
+function copyTxt(t,btn){const ok=()=>{const o=btn.textContent;btn.textContent='✓ جاهزة للإرسال';setTimeout(()=>btn.textContent=o,1500)};
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove();ok()};
+  try{navigator.clipboard.writeText(t).then(ok,fb)}catch(e){fb()}}
+function need(){const ALL=C22.cells.filter(c=>c.st==='priority'||c.edge).sort((a,b)=>(b.start-a.start)||((a.st==='priority'?0:1)-(b.st==='priority'?0:1))||(b.miss-a.miss));
+  const regs=D.regions.filter(r=>ALL.some(c=>c.r===r));
+  $('#needRegs').innerHTML=['الكل',...regs].map(r=>`<button class="chip ${r===NREG?'on':''}" data-r="${r}">${r}${r==='الكل'?'':` <span class="mu">(${ALL.filter(c=>c.r===r).length})</span>`}</button>`).join('');
+  $$('#needRegs .chip').forEach(b=>b.onclick=()=>{NREG=b.dataset.r;need()});
+  const C=NREG==='الكل'?ALL:ALL.filter(c=>c.r===NREG);
+  $('#needList').innerHTML=C.map((c,i)=>`<div class="card need ${c.start?'start':''}"><div class="txt">${c.start?'⭐ ':''}${c.edge?`<b>${c.r}</b> على الحافة في <b>${sg(c.g)}</b>: تغطيتها قريبة جداً من حد «تحتاج دعم».`:`<b>${c.r}</b> تحتاج ${plural(Math.round(c.miss))} إضافية في <b>${sg(c.g)}</b>.`}
+    <div class="mu" style="font-size:14px">التغطية ${Math.round(c.idx*100)}% من معدل المملكة · الحاجة للتخصص ${D.need[c.g]}</div></div>
+    <div class="row">${c.start?'<span class="badge b-red">التوصية</span>':''}${c.few?'<span class="badge b-gold">بيانات غير كافية</span>':''}${c.edge?'<span class="badge b-gold">على الحافة</span>':''}${!c.few&&!c.start&&!c.edge?'<span class="badge">بيانات كافية</span>':''}<button class="btn cp" data-i="${i}" style="padding:5px 12px;font-size:13.5px">↗ شارك</button></div></div>`).join('');
+  $$('#needList .cp').forEach(b=>b.onclick=()=>copyTxt(needText(C[+b.dataset.i]),b))}
+function plural(n){return n===1?'<b>جمعية واحدة</b>':n===2?'<b>جمعيتين</b>':(n<=10?`<b>${n}</b> جمعيات`:`<b>${fmt(n)}</b> جمعية`)}
+function dl(name,txt,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click()}
+$('#dlJson').onclick=()=>dl('gap_cards.json',JSON.stringify(D.cards,null,1),'application/json');
+$('#dlCsv').onclick=()=>{const k=Object.keys(D.cards[0]);const esc=v=>`"${String(v).replace(/"/g,'""')}"`;dl('gap_cards.csv','﻿'+[k.map(esc).join(','),...D.cards.map(c=>k.map(x=>esc(c[x])).join(','))].join('\n'),'text/csv')};
+
+/* ---------- quality ---------- */
+function quality(){const q=D.clean;
+  $('#qk').innerHTML=[[`${fmt(q.before)} = ${fmt(q.after)}`,'سجلات قبل = بعد · لم يُحذف شيء'],[fmt(q.cells),'خلية صُحّحت وتوثّقت'],[fmt(q.review),'حالة أُحيلت للمراجعة البشرية'],[fmt(100-D.backtest['نمو سنوي مركّب (CAGR)'],1)+'%','دقة التوقع في الاختبار على الماضي']].map(k=>`<div class="card kpi"><div class="v">${k[0]}</div><div class="l">${k[1]}</div></div>`).join('');
+  const mx=Math.max(...q.kinds.map(k=>k[1]));
+  const nice={'قيمة مفقودة (غير محدد)':'قيمة مفقودة ← «غير محدد»','قيمة شاذة (وصف خاطئ)':'وصف في غير مكانه','توحيد/إملاء':'توحيد وإملاء','مسافات':'مسافات زائدة','قيمة شاذة (مستوى خاطئ)':'تصنيف في مستوى خاطئ','قيمة مفقودة (مُستنتجة)':'قيمة مستنتجة بقاعدة موثّقة','قيمة شاذة (تشكيل مكرر)':'تشكيل مكرر'};
+  $('#kinds').innerHTML=q.kinds.map(([k,v])=>`<div class="k"><span class="t">${nice[k]||k}</span><span class="b" style="width:${Math.max(4,v/mx*55)}%"></span><b>${fmt(v)}</b></div>`).join('');
+  const s=stability();const nm=k=>{const [r,g]=k.split('|');return r+' · '+sg(g)};
+  $('#stabT').innerHTML=`<table><tr><th>سنة السكان</th><th>الشرقية لكل 100 ألف</th><th>ترتيبها</th><th>تحتاج دعم (بيانات كافية)</th></tr>${s.east.map(e=>`<tr><td>${e.y}${e.y==='2022'?' (الأصل)':' (متوقع)'}</td><td>${fmt(e.rate,2)}</td><td>${e.rank} من 13</td><td>${e.n}</td></tr>`).join('')}</table>
+   <ul class="clean" style="margin-top:12px">
+   <li class="${s.eastLast?'green':'gold'}">${s.eastLast?'✓':'⚠'} الشرقية الأخيرة في السنوات الثلاث.</li>
+   <li class="${s.startSame?'green':'gold'}">${s.startSame?'✓':'⚠'} خانات «التوصية» الثلاث نفسها في السنوات الثلاث.</li>
+   <li class="green">✓ ${s.core} من ${s.base} خانات «تحتاج دعم» تبقى في كل السنوات.</li>
+   ${s.changes.filter(c=>c.inn.length||c.out.length).map(c=>`<li class="gold">⚠ ${c.y}: ${c.inn.length?'تدخل '+c.inn.map(nm).join('، '):''}${c.inn.length&&c.out.length?' · ':''}${c.out.length?'تخرج '+c.out.map(nm).join('، '):''}</li>`).join('')}</ul>
+   <p class="note">التغيّر يحدث فقط في خانات تغطيتها قريبة جداً من حد النصف (49%–50%)، ولهذا نعرض وسم «على الحافة». القرار الأساسي لا يتغير.</p>`;
+  $('#exclLi').textContent=`خارج حساب المعدل: ${fmt(D.registered-C22.tot)} جمعية (نطاق وطني أو تصنيف غير محدد).`;
+  $('#foot').innerHTML=`مُدرك · أُنشئ تلقائياً من جداول التحليل · تاريخ الإنشاء: <bdi>${D.built.split('-').reverse().join('/')}</bdi> · المصادر: منصة البيانات المفتوحة، الهيئة العامة للإحصاء`}
+
+(function(){const R=D.rules,f=(k,d=0)=>fmt(R[k],d);
+  $('#rulesT').innerHTML='<tr><th>البند</th><th>القاعدة</th></tr>'+[
+   ['الجمعيات في الحساب',`${f('rows_in_rate')} من ${fmt(D.registered)} جمعية · استبعدنا ${f('excluded_national_entities')} بنطاق وطني لا تُنسب لمنطقة، و${f('excluded_unclassified')} بتصنيف غير محدد`],
+   ['معدل المملكة',`${f('national_per_100k_all_groups',2)} جمعية لكل 100,000 شخص = ${f('rows_in_rate')} جمعية ÷ ${f('population_total')} نسمة (تعداد 2022)`],
+   ['المقارنة','كل خانة (منطقة × تخصص) تُقارن بمعدل المملكة للتخصص نفسه، لا بالمعدل العام'],
+   ['تحتاج دعم / مكتفية',`أقل من ${f('config:low_ratio',1)} من معدل التخصص = تحتاج دعم · ${f('config:high_ratio',1)} فأكثر = مكتفية · وبينهما قريبة من المعدل`],
+   ['بيانات غير كافية',`أقل من ${f('config:min_region_count')} جمعيات في الخانة، أو أقل من ${f('config:min_national_count')} في المملكة للتخصص`],
+   ['الحاجة للتخصص',`حصة التخصص من المستفيدين ÷ حصته من المنشآت (مسح 2018): ${f('config:demand_high',1)} فأكثر = عالية · أقل من ${f('config:demand_low',1)} = أقل`],
+   ['التوصية ⭐','تحتاج دعم + بيانات كافية + الحاجة للتخصص عالية أو متوسطة'],
+   ['المؤسسات الأهلية',`${f('rows:Non_profit_Foundations_clean.csv')} مؤسسة: طبقة داعمة (تموّل وتدعم)، لا تدخل في معدل الجمعيات`]
+  ].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join('')})();
+home();drawRegions();drawMatrix();drawSim();y2030();need();quality();
+addEventListener('resize',()=>{if($('#regions').classList.contains('on'))drawBars()});
+</script>
+</body>
+</html>
